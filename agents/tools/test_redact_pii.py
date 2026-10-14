@@ -259,3 +259,121 @@ class TestEvalRows:
         result = redact_pii(original)
         assert "CBI notice" in result
         assert "RBI safe account" in result
+
+
+# ---------------------------------------------------------------------------
+# Bug-fix tests: spaced/hyphenated cards (Bug 1)
+# ---------------------------------------------------------------------------
+
+class TestSpacedCards:
+    def test_visa_spaced_4444(self):
+        """4-4-4-4 spaced card must become [CARD], not '[AADHAAR] 1111'."""
+        result = redact_pii("Card: 4111 1111 1111 1111")
+        assert result == "Card: [CARD]"
+        assert "[AADHAAR]" not in result
+        assert "1111" not in result
+
+    def test_visa_hyphenated_4444(self):
+        result = redact_pii("4111-1111-1111-1111 is your test card.")
+        assert "[CARD]" in result
+        assert "[AADHAAR]" not in result
+        assert "1111" not in result
+
+    def test_amex_spaced_465(self):
+        """Amex 4-6-5 groups."""
+        result = redact_pii("Amex: 3714 496353 98431")
+        assert "[CARD]" in result
+        assert "[AADHAAR]" not in result
+
+    def test_amex_hyphenated_465(self):
+        result = redact_pii("3714-496353-98431")
+        assert "[CARD]" in result
+        assert "[AADHAAR]" not in result
+
+    def test_mixed_in_sentence(self):
+        result = redact_pii("Pay with 5500 0000 0000 0004 before 5 PM.")
+        assert "[CARD]" in result
+        assert "[AADHAAR]" not in result
+        # surrounding text preserved
+        assert "Pay with" in result
+        assert "before 5 PM" in result
+
+
+# ---------------------------------------------------------------------------
+# Bug-fix tests: phone prefixes and 5-5 split (Bug 2)
+# ---------------------------------------------------------------------------
+
+class TestPhonePrefixes:
+    def test_plus91_space(self):
+        """+91 followed by space then 10-digit number."""
+        result = redact_pii("Call +91 98765 43210 now.")
+        assert "[PHONE]" in result
+        assert "98765" not in result
+
+    def test_plus91_no_space(self):
+        result = redact_pii("Contact +919876543210 for help.")
+        assert "[PHONE]" in result
+        assert "9876543210" not in result
+
+    def test_zero_prefix(self):
+        """0-prefixed STD-style mobile."""
+        result = redact_pii("Dial 09876543210 to reach us.")
+        assert "[PHONE]" in result
+        assert "9876543210" not in result
+
+    def test_five_five_space_split(self):
+        """98765 43210 — 5-5 split with space, no prefix."""
+        result = redact_pii("Please return to 98765 43210 urgently.")
+        assert "[PHONE]" in result
+        assert "98765" not in result
+
+    def test_five_five_hyphen_split(self):
+        """98765-43210 — 5-5 split with hyphen."""
+        result = redact_pii("Fraudster number: 98765-43210")
+        assert "[PHONE]" in result
+        assert "98765" not in result
+
+    def test_bare_ten_digits_unchanged(self):
+        """Existing bare 10-digit test still passes."""
+        result = redact_pii("Call officer 9876543210 immediately.")
+        assert "[PHONE]" in result
+        assert "9876543210" not in result
+
+
+# ---------------------------------------------------------------------------
+# Bug-fix tests: OTP keyword word-boundary — "pincode" must not trigger (Bug 3)
+# ---------------------------------------------------------------------------
+
+class TestOTPWordBoundary:
+    def test_pincode_not_redacted(self):
+        """'pincode 560001' — 'code' inside compound word must NOT fire OTP."""
+        result = redact_pii("pincode 560001")
+        assert result == "pincode 560001"
+        assert "[OTP]" not in result
+
+    def test_pincode_in_sentence(self):
+        result = redact_pii("My delivery address pincode is 560001.")
+        assert "560001" in result
+        assert "[OTP]" not in result
+
+    def test_barcode_not_redacted(self):
+        result = redact_pii("Scan barcode 1234 to proceed.")
+        assert "1234" in result
+        assert "[OTP]" not in result
+
+    def test_standalone_pin_still_fires(self):
+        """Bare 'PIN 4567' (space-separated) must still be redacted."""
+        result = redact_pii("Enter PIN 4567 to confirm.")
+        assert "[OTP]" in result
+        assert "4567" not in result
+
+    def test_standalone_code_still_fires(self):
+        """Bare 'code: 7890' must still be redacted."""
+        result = redact_pii("Your code: 7890 is valid.")
+        assert "[OTP]" in result
+        assert "7890" not in result
+
+    def test_verification_code_still_fires(self):
+        result = redact_pii("Your verification code: 938271. Do not share.")
+        assert "[OTP]" in result
+        assert "938271" not in result
