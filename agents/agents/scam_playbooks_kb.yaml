@@ -1,0 +1,11 @@
+spec_version: v1
+kind: knowledge_base
+name: scam_playbooks_kb
+description: |
+  Scam playbooks for Scam Shield — covers 14 scam types targeting senior
+  citizens in Bengaluru, with red-flag signals, genuine-message patterns,
+  and response advice in English, Hindi and Kannada.
+documents:
+  - "../kb/scam_playbooks.txt"
+vector_index:
+  embeddings_model_name: ibm/slate-125m-english-rtrvr-v2
