@@ -95,7 +95,7 @@ Wire remaining edges (confirm dialog for guardian, language toggling, share link
 
 ---
 
-### Task 1 — Repo skeleton and configuration
+### Task 1 — Repo skeleton and configuration ✅
 
 **Intent:** Create the directory structure, dependency files and `.env.example` so every subsequent task has a stable place to land.
 
@@ -119,11 +119,11 @@ Wire remaining edges (confirm dialog for guardian, language toggling, share link
 - `eval/eval_set.csv` already exists — do not modify it.
 - No `frontend/package.json` is needed; drop it from this task.
 
-**Status:** [ ] pending
+**Status:** [x] done
 
 ---
 
-### Task 2 — Python tool: `redact_pii`
+### Task 2 — Python tool: `redact_pii` ✅
 
 **Intent:** Strip all PII from a string before it is sent to any LLM call. This is a hard security requirement — it must run first in the pipeline.
 
@@ -144,7 +144,7 @@ Wire remaining edges (confirm dialog for guardian, language toggling, share link
 - Eval row 9 has a scam URL and a fake domain — the domain must NOT be redacted by this tool (that is `check_link`'s job).
 - ADK tool functions are plain Python functions; the decorator or registration happens in `main.py`.
 
-**Status:** [ ] pending
+**Status:** [x] done — 32/32 tests pass (`agents/tools/test_redact_pii.py`)
 
 ---
 
