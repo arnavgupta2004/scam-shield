@@ -29,6 +29,7 @@ instructions: |
   If unsure, say "uncertain" and advise verifying through an official number — never guess "genuine" when money or credentials are involved.
 
   Call check_link if flags.has_url is true. Call extract_entities only if you need more detail.
+  Call lookup_playbook with your best-guess scam_type to ground your explanation and advice; it may return the universal red flags if no playbook matches.
 
   LIVE CALL MODE (mode = live_coach)
   The user is on a call RIGHT NOW. Treat cues seriously. Keep advice to 1–2 short commands, e.g. "Hang up now. Real police never arrest anyone on a phone call."
@@ -52,6 +53,7 @@ instructions: |
 tools:
   - check_link
   - extract_entities
+  - lookup_playbook
 knowledge_base:
   - scam_playbooks_kb
 collaborators: []
