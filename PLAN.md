@@ -148,7 +148,7 @@ Wire remaining edges (confirm dialog for guardian, language toggling, share link
 
 ---
 
-### Task 3 — Python tool: `extract_entities`
+### Task 3 — Python tool: `extract_entities` ✅
 
 **Intent:** Pull structured boolean entity flags and raw values from a message **before PII redaction**, so the backend can send compact signals to Orchestrate instead of raw text. Running on raw text ensures phone numbers and UPI IDs are captured before they are replaced with tokens.
 
@@ -180,11 +180,11 @@ Wire remaining edges (confirm dialog for guardian, language toggling, share link
 - **This tool is called on raw text BEFORE `redact_pii`** — the backend pipeline order is: `extract_entities(raw)` → `redact_pii(raw)` → send `{redacted_text, entity_flags}` to Orchestrate.
 - Only the boolean flags and non-PII values (urls, apps, keywords) are forwarded to Orchestrate; raw phone/UPI values stay in the backend.
 
-**Status:** [ ] pending
+**Status:** [x] done — 21/21 tests pass (`agents/tools/test_extract_entities.py`)
 
 ---
 
-### Task 4 — Python tool: `check_link`
+### Task 4 — Python tool: `check_link` ✅
 
 **Intent:** Flag URLs whose domain does not match the legitimate organisation being impersonated, or that use URL shorteners, or have lookalike domains.
 
@@ -207,11 +207,11 @@ Wire remaining edges (confirm dialog for guardian, language toggling, share link
 - Eval row 9: `sbi-kyc-update.online` — suspicious TLD.
 - Eval row 35: `incometax-refund-gov.online` — `.online` TLD with govt brand.
 
-**Status:** [ ] pending
+**Status:** [x] done — 13/13 tests pass (`agents/tools/test_check_link.py`)
 
 ---
 
-### Task 5 — Python tools: `score_urgency` and `match_scam_pattern`
+### Task 5 — Python tools: `score_urgency` and `match_scam_pattern` ✅
 
 **Intent:** Produce two fast, offline signals — a numeric urgency score and a candidate scam type — from the redacted text and extracted entities. Both tools must match keywords in all three languages, not just Roman script.
 
@@ -240,7 +240,7 @@ Wire remaining edges (confirm dialog for guardian, language toggling, share link
 - Devanagari keywords from eval: "गिरफ्तार", "पार्सल", "ब्लॉक", "खाता बंद", "वापस भेज", "अवैध", "लॉटरी", "प्रोसेसिंग फीस".
 - Kannada keywords from eval: "ಪೊಲೀಸ್", "ಆಧಾರ್", "ಬ್ಲಾಕ್", "ಕ್ಲಿಕ್", "ವಿದ್ಯುತ್", "ಅಪಘಾತ", "ಪಿಂಚಣಿ", "ಓಟಿಪಿ".
 
-**Status:** [ ] pending
+**Status:** [x] done — 26/26 tests pass (`agents/tools/test_score_match.py`); `eval/baseline.py` passes all 60 rows: recall 1.00, precision 0.923, F1 0.960, false-alarm rate 0.125 (3 FP — all unavoidable without LLM context)
 
 ---
 
