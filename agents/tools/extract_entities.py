@@ -34,7 +34,11 @@ _URL_RE = re.compile(
     re.IGNORECASE,
 )
 
-_PHONE_RE = re.compile(r"(?<!\d)[6-9]\d{9}(?!\d)")
+# Indian mobiles: bare 10 digits, 5-5 split, or with +91 / 0 prefix
+# (same formats that redact_pii masks).
+_PHONE_RE = re.compile(
+    r"(?<![\d@])(?:\+91[\s-]?|0)?[6-9]\d{4}[\s-]?\d{5}(?![\d@])"
+)
 
 _APK_RE = re.compile(r"\b\w[\w.\-]*\.apk\b", re.IGNORECASE)
 

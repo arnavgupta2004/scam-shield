@@ -37,6 +37,7 @@ for tool_file in \
     "${TOOLS_DIR}/match_scam_pattern.py" \
     "${TOOLS_DIR}/check_link.py" \
     "${TOOLS_DIR}/extract_entities.py" \
+    "${TOOLS_DIR}/lookup_playbook.py" \
     "${TOOLS_DIR}/draft_family_alert.py"; do
 
     tool_name="$(basename "${tool_file}" .py)"

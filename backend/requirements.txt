@@ -2,3 +2,6 @@ fastapi>=0.111
 uvicorn[standard]>=0.29
 httpx>=0.27
 python-dotenv>=1.0
+# The backend reuses the tool functions in agents/tools, which import the ADK decorator.
+ibm-watsonx-orchestrate==2.18.1
+pytest>=8.0
