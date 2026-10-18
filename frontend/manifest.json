@@ -1,0 +1,12 @@
+{
+  "name": "Scam Shield",
+  "short_name": "Scam Shield",
+  "description": "Check a suspicious message or call in English, Hindi or Kannada.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F4F6F9",
+  "theme_color": "#14213D",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}
