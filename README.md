@@ -1,15 +1,40 @@
 # Scam Shield
 
-Scam Shield helps senior citizens in Bengaluru check a suspicious message or phone call in English, Hindi or Kannada, and tells them in plain words what to do next. It runs on IBM watsonx Orchestrate agents.
+**IBM Bobathon: Build for Bengaluru** · Student category · Safer Communities, Stronger Futures
 
-**The problem.** Older adults are the main targets of "digital arrest", KYC, electricity, courier and fake-relative scams. These scams work by isolating the victim and rushing them, and the money usually leaves in the minutes before anyone else is called.
+Scam Shield helps senior citizens in Bengaluru check a suspicious message or phone call in English, Hindi or Kannada, and tells them in plain words what to do next. It runs on IBM watsonx Orchestrate agents; the agents and their tools were built with IBM Bob.
 
-**What it does**
+- Demo video: _add link_
+- Presentation: _add link or file name_
 
-- **Check a message.** Paste or speak an SMS, WhatsApp message or call summary. You get a verdict (looks like a scam / looks safe / not sure), the warning signs, and one or two clear actions.
-- **"I'm on a call right now".** Big buttons describe what the caller is saying ("says police", "asks for OTP", "says don't tell anyone"), and the app replies with an instruction like "Hang up now". The user doesn't need to type during a call.
+## The problem
+
+Older adults are the main targets of "digital arrest", KYC, electricity-cutoff, courier and fake-relative scams. These scams work by isolating the victim and rushing them, and the money usually leaves in the minutes before anyone else is called. What needs to improve is the moment of doubt: a senior needs a fast, trustworthy second opinion, in their own language, before they pay or share a code.
+
+## What it does
+
+- **Check a message.** Paste or speak an SMS, WhatsApp message or call summary. You get a verdict (looks like a scam / looks safe / not sure), the warning signs, and one or two clear actions, read aloud if you want.
+- **"I'm on a call right now".** Big buttons describe what the caller is saying ("says police", "asks for OTP", "says don't tell anyone"), and the app replies with an instruction like "Hang up now". No typing during a call.
 - **Alert my family**, with human review built in. Nothing is drafted until the user confirms, and the user sends the message themselves on WhatsApp or SMS. The family number stays on the phone.
 - **How to report.** 1930, cybercrime.gov.in and Chakshu (Sanchar Saathi), in the user's language.
+
+## Results
+
+Every message goes through the full pipeline: local PII redaction, then the watsonx Orchestrate agents. Full report: [eval/eval_report.md](eval/eval_report.md).
+
+| | Rule tools alone | Scam Shield (rules + agents) |
+|---|---|---|
+| **Held-out set**: scams caught | 4 of 22 | **21 of 22** |
+| Held-out: genuine messages wrongly flagged | 4 of 18 | 1 of 18 |
+| Dev set: scams caught | 36 of 36 | 35 of 36 |
+| Dev set: genuine messages wrongly flagged | 3 of 24 | 0 of 24 |
+| Median time to an answer | instant | about 4 seconds |
+
+- **Dev set** (60 messages): the rule tools were written alongside it, which is why rules alone look perfect there.
+- **Held-out set** (40 messages): written separately, with scam types the rules have never seen (rental deposit, OLX buyer, wrong-number crypto, insurance claim). Nothing was tuned on it. Both sets were written by the team, not collected from real victims.
+- The one dev miss (row 2) was a request that timed out and fell back to the rules, which answered "not sure". Held-out errors: a wrong-number romance opener marked safe (row 107) and a Hindi pharmacy delivery message flagged as a scam (row 136).
+
+**Impact measure:** scams caught before the user acts. On messages the system had never seen, the agents raised it from 4 of 22 to 21 of 22, with an answer in about 4 seconds.
 
 ## Architecture
 
@@ -25,7 +50,7 @@ Scam Shield helps senior citizens in Bengaluru check a suspicious message or pho
         v
  watsonx Orchestrate
    scam_shield_triage (supervisor)
-     -> scam_analyst  [tools: check_link, extract_entities, lookup_playbook; KB: scam playbooks]
+     -> scam_analyst  [tools: check_link, extract_entities, lookup_playbook; knowledge base: scam playbooks]
    guardian       [tool: draft_family_alert, refuses unless user_confirmed = true]
    report_helper
         |
@@ -52,7 +77,7 @@ pip install -r backend/requirements.txt
 
 cp .env.example .env                 # add WO_INSTANCE and WO_API_KEY
 orchestrate env activate <your-env>
-bash agents/import_all.sh            # tools, knowledge base, agents
+bash agents/import_all.sh            # tools, knowledge base, agents (check the output for errors)
 python backend/agent_ids.py          # paste the printed ids into .env
 
 uvicorn backend.main:app --reload    # open http://localhost:8000
@@ -60,24 +85,35 @@ uvicorn backend.main:app --reload    # open http://localhost:8000
 
 Tests (no credentials needed): `python -m pytest agents/tools backend -q`
 
-## Evaluation
+Re-run the evaluation (backend must be running): `python eval/eval.py`. Rules-only baseline: `python eval/baseline.py --compare eval/holdout_set.csv`.
 
-```bash
-python eval/eval.py                  # needs the backend running
-```
+## Repository map
 
-Every row goes through the full pipeline (redaction, then the agents). Results are in [eval/eval_report.md](eval/eval_report.md).
-
-- **Dev set**: 60 messages (36 scam, 24 genuine). The rule tools were written alongside it.
-- **Held-out set**: 40 messages, including scam types the rules have never seen (rental deposit, OLX buyer, wrong-number crypto, insurance claim). Nothing was tuned on it.
-- "Uncertain" is reported separately and never counted as a correct answer for a genuine message.
-
-Rule tools alone (`python eval/baseline.py --compare eval/holdout_set.csv`): 100% recall on dev but 18% on held-out. The agents have to close that gap.
+| Path | What it is |
+|---|---|
+| `agents/tools/` | Python tools imported into Orchestrate (redaction, entities, links, urgency, patterns, playbook lookup, family alert) and their tests |
+| `agents/agents/` | The four agent definitions and the knowledge-base spec |
+| `agents/import_all.sh` | Imports tools, knowledge base and agents in order |
+| `kb/` | Scam playbooks (14 scam types) used by the knowledge base and `lookup_playbook` |
+| `backend/` | FastAPI API, Orchestrate client, PII pipeline, offline fallback, tests |
+| `frontend/` | The web app (plain HTML/CSS/JS, installable) |
+| `eval/` | Test sets, rules baseline, end-to-end evaluation and its report |
+| `PLAN.md` | The build plan produced in Bob's Plan mode |
+| `docs/BOB_STORY.md` | How IBM Bob was used, with commit references |
 
 ## How it was built
 
-- **Built with IBM Bob** (Plan and Agent modes in Bob Shell): the build plan, all agent tools and their tests (`agents/tools`), the four Orchestrate agents, the import script and the rule baseline. See the commits marked "(Bob)".
-- **Built without Bob**, after the Bob trial credits ran out: the web app (`frontend/`), the API (`backend/`) and the end-to-end evaluation script (`eval/eval.py`).
+- **Built with IBM Bob** (Plan and Agent modes in Bob Shell): the build plan, all agent tools and their tests, the four Orchestrate agents, the knowledge-base setup, the import script and the rules baseline. See [docs/BOB_STORY.md](docs/BOB_STORY.md) and the commits marked "(Bob)".
+- **Built without Bob**, after the Bob trial credits ran out: the web app (`frontend/`), the API (`backend/`), the end-to-end evaluation script, and a later fix to the triage hand-off.
 - The scam playbooks and test sets were prepared separately as data.
 
-Known limits: the knowledge-base vector index failed to build on the trial instance (embedding service 502), so `lookup_playbook` serves the same playbooks as a tool. Hindi and Kannada text should be checked by native speakers.
+## Known limits
+
+- Tested on 100 team-written messages, not real-world traffic. A larger, independently written test set is the next step.
+- Answers take about 4 seconds; a slow agent call occasionally times out and falls back to the rules.
+- Hindi and Kannada output should be reviewed by native speakers.
+- The prototype runs on a watsonx Orchestrate trial instance.
+
+## License
+
+MIT, see [LICENSE](LICENSE).
