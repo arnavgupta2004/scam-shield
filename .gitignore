@@ -7,4 +7,4 @@ __pycache__/
 dist/
 build/
 .pytest_cache/
-eval/eval_report.md
+eval/results_*.csv
