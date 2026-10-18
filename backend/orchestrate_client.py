@@ -100,6 +100,7 @@ class OrchestrateClient:
 def parse_reply(raw: str) -> str:
     """Join SSE content deltas; fall back to a plain JSON chat-completion body."""
     chunks: list[str] = []
+    final: str | None = None  # full text from a completed-message event
     saw_sse = False
     for line in raw.splitlines():
         line = line.strip()
@@ -114,11 +115,14 @@ def parse_reply(raw: str) -> str:
         except json.JSONDecodeError:
             continue
         for choice in event.get("choices", []) or []:
-            piece = (choice.get("delta") or {}).get("content") or (choice.get("message") or {}).get("content")
-            if piece:
-                chunks.append(piece)
+            delta = (choice.get("delta") or {}).get("content")
+            if delta:
+                chunks.append(delta)
+            elif (choice.get("message") or {}).get("content"):
+                # Orchestrate repeats the whole reply in a final event; use it only if no deltas arrived.
+                final = choice["message"]["content"]
     if saw_sse:
-        return "".join(chunks)
+        return "".join(chunks) or final or ""
     try:
         body = json.loads(raw)
         return body["choices"][0]["message"]["content"]

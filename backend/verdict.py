@@ -42,13 +42,27 @@ def _json_objects(text: str):
                 start = None
 
 
-def extract_json(text: str, required_key: str) -> dict | None:
-    """Find the first JSON object in *text* containing *required_key*."""
+def extract_json(text: str, required_key: str, _depth: int = 0) -> dict | None:
+    """Find the first JSON object in *text* containing *required_key*.
+
+    A supervisor sometimes returns its collaborator's wrapper verbatim, e.g.
+    {"thread_id": "...", "message": "{\\"verdict\\": ...}"}, so string values
+    are searched as well (one level deep).
+    """
     candidates = [m.group(1) for m in _FENCE_RE.finditer(text)] + [text]
+    nested: list[str] = []
     for chunk in candidates:
         for obj in _json_objects(chunk):
-            if isinstance(obj, dict) and required_key in obj:
+            if not isinstance(obj, dict):
+                continue
+            if required_key in obj:
                 return obj
+            nested += [v for v in obj.values() if isinstance(v, str) and "{" in v]
+    if _depth < 1:
+        for value in nested:
+            found = extract_json(value, required_key, _depth + 1)
+            if found:
+                return found
     return None
 
 

@@ -14,7 +14,7 @@ instructions: |
 
   Steps:
   1. Call score_urgency and match_scam_pattern on the text. These are fast hints only — they miss new scam types, so never decide a verdict from them alone.
-  2. ALWAYS hand off to scam_analyst. When you hand off, you MUST pass the field "lang" explicitly with the exact value from the input (e.g. "en", "hi", or "kn"). Also pass: text, mode, flags, cues, urgency (score_urgency result), and scam_type_hint (match_scam_pattern result).
+  2. ALWAYS hand off to scam_analyst. scam_analyst only sees the "message" argument of the hand-off, so "message" MUST be a single JSON string containing every input field — text (copied exactly, never shortened), lang (exact value: "en", "hi" or "kn"), mode, flags, cues — plus urgency (score_urgency result) and scam_type_hint (match_scam_pattern result). Never send an empty message.
   3. Return scam_analyst's JSON exactly as received. Do not add commentary.
 
   LANGUAGE RULE: scam_analyst must reply in the language given by lang. en → English, hi → Hindi (Devanagari), kn → Kannada script. You are responsible for passing lang through so scam_analyst can honour it.

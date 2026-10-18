@@ -76,6 +76,12 @@ def test_parse_reply_joins_sse_chunks():
     assert parse_reply(sse("hello world, this is long")) == "hello world, this is long"
 
 
+def test_parse_reply_ignores_repeated_final_message():
+    final = json.dumps({"object": "thread.message.completed", "choices": [{"message": {"content": "hello"}}]})
+    raw = sse("hello").replace("data: [DONE]", f"data: {final}\n\ndata: [DONE]")
+    assert parse_reply(raw) == "hello"
+
+
 def test_parse_reply_plain_json_body():
     body = json.dumps({"choices": [{"message": {"content": "hi"}}]})
     assert parse_reply(body) == "hi"
@@ -89,6 +95,11 @@ def test_extract_json_from_code_fence_and_prose():
 def test_extract_json_skips_other_objects():
     text = '{"tool": "x"} then ' + AGENT_SCAM
     assert extract_json(text, "verdict")["scam_type"] == "digital_arrest"
+
+
+def test_extract_json_unwraps_collaborator_message():
+    text = json.dumps({"thread_id": "t1", "message": AGENT_SCAM})
+    assert extract_json(text, "verdict")["verdict"] == "scam"
 
 
 def test_normalise_rejects_bad_verdict():
