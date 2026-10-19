@@ -115,6 +115,15 @@ textarea:focus, input:focus { border-color: var(--ink); }
 .privacy { display: flex; gap: 10px; align-items: flex-start; margin-top: 28px; font-size: 17px; color: var(--muted); }
 .privacy svg { width: 22px; height: 22px; fill: var(--primary); flex: none; margin-top: 3px; }
 
+/* OCR screenshot button */
+.ocr-btn { margin-top: 10px; color: var(--muted); border-color: var(--line); font-weight: 400; }
+.ocr-btn svg { width: 24px; height: 24px; fill: currentColor; }
+.ocr-btn:hover { background: #E8ECF2; color: var(--ink); }
+.ocr-progress {
+  margin: 8px 0 0; font-size: 22px; font-weight: 700; text-align: center;
+  color: var(--primary); padding: 10px 0;
+}
+
 /* Live coach cues */
 .cues { display: grid; gap: 10px; margin: 6px 0 22px; }
 .cue {

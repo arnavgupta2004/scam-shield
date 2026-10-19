@@ -241,6 +241,62 @@
   });
   $("ready-close").addEventListener("click", () => $("alert-ready").close());
 
+  // ---------------- OCR (Tesseract.js, on-device) ----------------
+  // Language map: UI lang -> Tesseract language code(s). The image never leaves the device.
+  const OCR_LANG = { en: "eng", hi: "hin", kn: "kan" };
+
+  function setOcrProgress(msg) {
+    const el = $("ocr-progress");
+    el.textContent = msg;
+    el.hidden = !msg;
+  }
+
+  $("btn-ocr").addEventListener("click", () => {
+    // Reset and open the file picker
+    $("ocr-input").value = "";
+    showError("home-error", "");
+    setOcrProgress("");
+    $("ocr-input").click();
+  });
+
+  $("ocr-input").addEventListener("change", async () => {
+    const file = $("ocr-input").files[0];
+    if (!file) return;
+
+    // Guard: Tesseract.js must be loaded (CDN script at bottom of index.html)
+    if (typeof Tesseract === "undefined") {
+      showError("home-error", t("ocrError"));
+      return;
+    }
+
+    setOcrProgress(t("ocrReading"));
+    $("btn-ocr").disabled = true;
+
+    try {
+      const ocrLang = OCR_LANG[lang] || "eng";
+      const { data: { text } } = await Tesseract.recognize(file, ocrLang, {
+        // Suppress Tesseract's own verbose console output
+        logger: () => {},
+      });
+      const cleaned = text.replace(/\r\n/g, "\n").trim();
+      if (!cleaned) {
+        setOcrProgress("");
+        showError("home-error", t("ocrEmpty"));
+        return;
+      }
+      $("msg").value = cleaned;
+      setOcrProgress(t("ocrDone"));
+      $("msg").focus();
+    } catch {
+      setOcrProgress("");
+      showError("home-error", t("ocrError"));
+    } finally {
+      $("btn-ocr").disabled = false;
+      // Clear the input so picking the same file again fires change
+      $("ocr-input").value = "";
+    }
+  });
+
   // ---------------- share target (PWA Web Share Target) ----------------
   function applyShareParams() {
     const params = new URLSearchParams(window.location.search);
