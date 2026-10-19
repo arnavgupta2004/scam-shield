@@ -206,6 +206,25 @@ dialog h2 { margin-top: 0; font-size: 26px; }
 .dialog-actions.stack { flex-direction: column; }
 .quote { padding: 14px 16px; border-left: 6px solid var(--primary); background: var(--paper); border-radius: 4px; }
 
+/* Know the tricks screen */
+.tricks-home-btn { margin-top: 18px; }
+.tricks-counter { margin: 4px 0 16px; font-size: 18px; color: var(--muted); }
+.trick-card {
+  background: var(--surface); border: 2px solid var(--line);
+  border-radius: var(--radius-l); padding: 24px 20px; margin-bottom: 20px;
+}
+.trick-card-title { margin: 0 0 18px; font-size: 26px; line-height: 1.25; color: var(--ink); }
+.trick-section { margin-top: 14px; }
+.trick-section h3 { margin: 0 0 6px; font-size: 18px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+.trick-section p { margin: 0; font-size: 22px; line-height: 1.5; }
+.trick-do { background: var(--safe-tint); border-radius: var(--radius-s); padding: 14px 16px; margin-top: 18px; }
+.trick-do h3 { color: var(--safe); }
+.tricks-nav {
+  display: grid; grid-template-columns: 1fr auto 1fr; gap: 10px; align-items: center;
+}
+.tricks-nav #btn-tricks-next { justify-self: end; }
+.tricks-nav #btn-tricks-read { min-width: 64px; padding: 0; }
+
 @media (max-width: 420px) {
   body { font-size: 19px; }
   h1 { font-size: 28px; }

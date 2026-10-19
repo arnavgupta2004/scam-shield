@@ -27,13 +27,14 @@
     document.querySelectorAll("[data-lang]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.lang === lang)));
     renderCues();
     if (lastResult && !$("screen-verdict").hidden) renderVerdict(lastResult);
+    if (!$("screen-tricks").hidden) renderTrickCard();
   }
   document.querySelectorAll("[data-lang]").forEach((b) =>
     b.addEventListener("click", () => { lang = b.dataset.lang; store.set("lang", lang); applyLang(); }));
 
   // ---------------- screens ----------------
   function show(name) {
-    ["home", "coach", "wait", "verdict"].forEach((s) => { $("screen-" + s).hidden = s !== name; });
+    ["home", "coach", "wait", "verdict", "tricks"].forEach((s) => { $("screen-" + s).hidden = s !== name; });
     window.scrollTo(0, 0);
   }
   document.querySelectorAll("[data-go]").forEach((b) => b.addEventListener("click", () => show(b.dataset.go)));
@@ -321,6 +322,63 @@
     // Clear the URL params so a refresh doesn't re-fill the field.
     history.replaceState(null, "", "/");
   }
+
+  // ---------------- know the tricks ----------------
+  let tricks = [];       // loaded once from tricks.json
+  let trickIdx = 0;
+
+  function renderTrickCard() {
+    if (!tricks.length) return;
+    const card = tricks[trickIdx][lang] || tricks[trickIdx]["en"];
+    $("trick-card-title").textContent = card.title;
+    $("trick-card-how").textContent = card.how;
+    $("trick-card-do").textContent = card.do;
+    const counter = t("tricksCounter")
+      .replace("{n}", String(trickIdx + 1))
+      .replace("{total}", String(tricks.length));
+    $("tricks-counter").textContent = counter;
+    $("btn-tricks-back").disabled = trickIdx === 0;
+    $("btn-tricks-next").disabled = trickIdx === tricks.length - 1;
+  }
+
+  $("btn-tricks").addEventListener("click", async () => {
+    if (!tricks.length) {
+      try {
+        const res = await fetch("tricks.json");
+        tricks = await res.json();
+      } catch {
+        return; // silently stay on home if JSON fails to load
+      }
+    }
+    trickIdx = 0;
+    show("tricks");
+    renderTrickCard();
+    $("tricks-title").focus?.();
+  });
+
+  $("btn-tricks-close").addEventListener("click", () => {
+    window.speechSynthesis?.cancel();
+    show("home");
+  });
+
+  $("btn-tricks-back").addEventListener("click", () => {
+    if (trickIdx > 0) { trickIdx--; renderTrickCard(); }
+  });
+
+  $("btn-tricks-next").addEventListener("click", () => {
+    if (trickIdx < tricks.length - 1) { trickIdx++; renderTrickCard(); }
+  });
+
+  $("btn-tricks-read").addEventListener("click", () => {
+    if (!tricks.length || !window.speechSynthesis) return;
+    const card = tricks[trickIdx][lang] || tricks[trickIdx]["en"];
+    const parts = [card.title, t("tricksHow"), card.how, t("tricksDo"), card.do];
+    const u = new SpeechSynthesisUtterance(parts.join(". "));
+    u.lang = SPEECH_LANG[lang];
+    u.rate = 0.9;
+    speechSynthesis.cancel();
+    speechSynthesis.speak(u);
+  });
 
   // ---------------- family number setting ----------------
   (function initFamilySetting() {

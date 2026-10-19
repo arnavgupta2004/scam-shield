@@ -73,6 +73,38 @@
         <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 2 4 5v6c0 5 3.4 9.7 8 11 4.6-1.3 8-6 8-11V5l-8-3Z"/></svg>
         <span data-t="privacy"></span>
       </p>
+
+      <button type="button" id="btn-tricks" class="btn btn-quiet btn-wide tricks-home-btn">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2Zm1 17h-2v-2h2v2Zm2-7.7-.9.9c-.7.7-1.1 1.3-1.1 2.8h-2v-.5c0-1.1.4-2.1 1.1-2.8l1.2-1.3a2 2 0 1 0-3.3-1.4H8a4 4 0 1 1 7 2.3Z"/></svg>
+        <span data-t="tricksBtn"></span>
+      </button>
+    </section>
+
+    <!-- Know the tricks -->
+    <section id="screen-tricks" class="screen" hidden aria-labelledby="tricks-title">
+      <button type="button" id="btn-tricks-close" class="link back" data-t="tricksClose"></button>
+      <h1 id="tricks-title" data-t="tricksTitle"></h1>
+      <p id="tricks-counter" class="tricks-counter" aria-live="polite"></p>
+
+      <article class="trick-card" id="trick-card" aria-live="polite">
+        <h2 id="trick-card-title" class="trick-card-title"></h2>
+        <div class="trick-section">
+          <h3 data-t="tricksHow"></h3>
+          <p id="trick-card-how"></p>
+        </div>
+        <div class="trick-section trick-do">
+          <h3 data-t="tricksDo"></h3>
+          <p id="trick-card-do"></p>
+        </div>
+      </article>
+
+      <div class="tricks-nav">
+        <button type="button" id="btn-tricks-back" class="btn btn-quiet" data-t="tricksBack"></button>
+        <button type="button" id="btn-tricks-read" class="btn btn-quiet" data-t="tricksRead">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3Zm13.5 3A4.5 4.5 0 0 0 14 7.97v8.05c1.48-.73 2.5-2.25 2.5-4.02ZM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77Z"/></svg>
+        </button>
+        <button type="button" id="btn-tricks-next" class="btn btn-quiet" data-t="tricksNext"></button>
+      </div>
     </section>
 
     <!-- Live call coach -->

@@ -1,0 +1,254 @@
+[
+  {
+    "id": "digital_arrest",
+    "en": {
+      "title": "Digital arrest (fake police / CBI)",
+      "how": "Caller claims your Aadhaar or a parcel is linked to a crime and puts you under 'digital arrest' on a video call, demanding money to 'clear your name'.",
+      "do": "Hang up now. Real police never arrest anyone on a video call and never ask for money transfers."
+    },
+    "hi": {
+      "title": "डिजिटल अरेस्ट (नकली पुलिस / CBI)",
+      "how": "कॉल करने वाला कहता है कि आपका आधार या पार्सल किसी अपराध से जुड़ा है और वीडियो कॉल पर आपको 'डिजिटल अरेस्ट' करता है, नाम साफ करने के लिए पैसे माँगता है।",
+      "do": "तुरंत कॉल काटें। असली पुलिस कभी भी वीडियो कॉल पर गिरफ़्तार नहीं करती और न ही पैसे माँगती है।"
+    },
+    "kn": {
+      "title": "ಡಿಜಿಟಲ್ ಅರೆಸ್ಟ್ (ನಕಲಿ ಪೊಲೀಸ್ / CBI)",
+      "how": "ಕರೆ ಮಾಡಿದವರು ನಿಮ್ಮ ಆಧಾರ್ ಅಥವಾ ಪಾರ್ಸೆಲ್ ಅಪರಾಧಕ್ಕೆ ಸಂಬಂಧಿಸಿದೆ ಎಂದು ಹೇಳಿ ವಿಡಿಯೋ ಕರೆಯಲ್ಲಿ 'ಡಿಜಿಟಲ್ ಅರೆಸ್ಟ್' ಮಾಡಿ ಹಣ ಕೇಳುತ್ತಾರೆ.",
+      "do": "ಈಗಲೇ ಕರೆ ಕಡಿತಗೊಳಿಸಿ. ನಿಜವಾದ ಪೊಲೀಸರು ಎಂದಿಗೂ ವಿಡಿಯೋ ಕರೆಯಲ್ಲಿ ಬಂಧಿಸುವುದಿಲ್ಲ ಅಥವಾ ಹಣ ಕೇಳುವುದಿಲ್ಲ."
+    }
+  },
+  {
+    "id": "courier_scam",
+    "en": {
+      "title": "Courier / customs parcel",
+      "how": "A call or message claims your parcel contains drugs or is held at customs and asks you to pay a duty — often leading into a fake-police script.",
+      "do": "Hang up. Courier companies never transfer you to the police. Check only on the courier's official app or website."
+    },
+    "hi": {
+      "title": "कूरियर / कस्टम पार्सल",
+      "how": "कॉल या संदेश में कहा जाता है कि आपके पार्सल में ड्रग्स हैं या कस्टम में रोका गया है और शुल्क माँगा जाता है — अक्सर यह नकली पुलिस स्क्रिप्ट बन जाती है।",
+      "do": "कॉल काटें। कूरियर कंपनियाँ कभी पुलिस से नहीं जोड़तीं। केवल कूरियर की आधिकारिक ऐप या वेबसाइट पर जाँचें।"
+    },
+    "kn": {
+      "title": "ಕೊರಿಯರ್ / ಕಸ್ಟಮ್ಸ್ ಪಾರ್ಸೆಲ್",
+      "how": "ನಿಮ್ಮ ಪಾರ್ಸೆಲ್‌ನಲ್ಲಿ ಡ್ರಗ್ಸ್ ಇದೆ ಅಥವಾ ಕಸ್ಟಮ್ಸ್‌ನಲ್ಲಿ ತಡೆಹಿಡಿದಿದೆ ಎಂದು ಕರೆ ಅಥವಾ ಸಂದೇಶ ಬರುತ್ತದೆ, ಸುಂಕ ಕಟ್ಟಲು ಹೇಳುತ್ತಾರೆ.",
+      "do": "ಕರೆ ಕಡಿತಗೊಳಿಸಿ. ಕೊರಿಯರ್ ಕಂಪನಿಗಳು ಎಂದಿಗೂ ಪೊಲೀಸರಿಗೆ ವರ್ಗಾಯಿಸುವುದಿಲ್ಲ. ಅಧಿಕೃತ ಕೊರಿಯರ್ ಆ್ಯಪ್‌ನಲ್ಲಿ ಮಾತ್ರ ಪರಿಶೀಲಿಸಿ."
+    }
+  },
+  {
+    "id": "kyc_scam",
+    "en": {
+      "title": "KYC update — account will be blocked",
+      "how": "An SMS or WhatsApp message warns your bank account or SIM will be blocked today unless you click a link or install an APK file to update KYC.",
+      "do": "Don't click. Banks never block accounts over SMS links. Go to your branch or official bank app."
+    },
+    "hi": {
+      "title": "KYC अपडेट — खाता बंद होगा",
+      "how": "SMS या WhatsApp पर कहा जाता है कि आज ही KYC अपडेट नहीं किया तो बैंक खाता / SIM बंद हो जाएगा — एक लिंक या APK फ़ाइल के साथ।",
+      "do": "लिंक न दबाएँ। बैंक कभी SMS लिंक से खाता बंद नहीं करते। अपनी शाखा या आधिकारिक बैंक ऐप पर जाएँ।"
+    },
+    "kn": {
+      "title": "KYC ಅಪ್‌ಡೇಟ್ — ಖಾತೆ ಬ್ಲಾಕ್ ಆಗುತ್ತದೆ",
+      "how": "ಇಂದೇ KYC ಅಪ್‌ಡೇಟ್ ಮಾಡದಿದ್ದರೆ ಬ್ಯಾಂಕ್ ಖಾತೆ / SIM ಬ್ಲಾಕ್ ಆಗುತ್ತದೆ ಎಂದು SMS ಅಥವಾ WhatsApp ಸಂದೇಶ ಬರುತ್ತದೆ — ಲಿಂಕ್ ಅಥವಾ APK ಫೈಲ್ ಸಮೇತ.",
+      "do": "ಲಿಂಕ್ ಒತ್ತಬೇಡಿ. ಬ್ಯಾಂಕ್‌ಗಳು SMS ಲಿಂಕ್‌ಗಳ ಮೂಲಕ ಖಾತೆ ಬ್ಲಾಕ್ ಮಾಡುವುದಿಲ್ಲ. ನಿಮ್ಮ ಶಾಖೆಗೆ ಅಥವಾ ಅಧಿಕೃತ ಬ್ಯಾಂಕ್ ಆ್ಯಪ್‌ಗೆ ಹೋಗಿ."
+    }
+  },
+  {
+    "id": "electricity_scam",
+    "en": {
+      "title": "Electricity bill disconnection",
+      "how": "A message threatens your electricity will be cut tonight unless you call an 'officer' on a personal mobile number, who then asks you to install a remote-access app.",
+      "do": "Electricity offices don't call from personal numbers or ask you to install apps. Check your bill on the official site."
+    },
+    "hi": {
+      "title": "बिजली बिल कटौती",
+      "how": "संदेश में धमकी दी जाती है कि अगर किसी 'अधिकारी' के व्यक्तिगत नंबर पर कॉल नहीं किया तो आज रात बिजली कट जाएगी — वे एक रिमोट-एक्सेस ऐप इंस्टॉल करवाते हैं।",
+      "do": "बिजली विभाग व्यक्तिगत नंबरों से कॉल नहीं करता और न ही ऐप इंस्टॉल करवाता है। आधिकारिक साइट पर बिल जाँचें।"
+    },
+    "kn": {
+      "title": "ವಿದ್ಯುತ್ ಬಿಲ್ ಕಡಿತ",
+      "how": "'ಅಧಿಕಾರಿ'ಯ ವೈಯಕ್ತಿಕ ನಂಬರ್‌ಗೆ ಕರೆ ಮಾಡದಿದ್ದರೆ ಇಂದು ರಾತ್ರಿ ವಿದ್ಯುತ್ ಕಡಿಯಲಾಗುತ್ತದೆ ಎಂದು ಸಂದೇಶ ಬರುತ್ತದೆ — ನಂತರ ರಿಮೋಟ್ ಆ್ಯಪ್ ಹಾಕಿಸುತ್ತಾರೆ.",
+      "do": "ವಿದ್ಯುತ್ ಕಚೇರಿಗಳು ವೈಯಕ್ತಿಕ ನಂಬರ್‌ಗಳಿಂದ ಕರೆ ಮಾಡುವುದಿಲ್ಲ ಅಥವಾ ಆ್ಯಪ್ ಹಾಕಿಸುವುದಿಲ್ಲ. ಅಧಿಕೃತ ಸೈಟ್‌ನಲ್ಲಿ ಬಿಲ್ ಪರಿಶೀಲಿಸಿ."
+    }
+  },
+  {
+    "id": "fake_customer_care",
+    "en": {
+      "title": "Fake customer care number",
+      "how": "You find a helpline number in a search result or ad — it's fake. The 'agent' asks you to enter your UPI PIN to 'receive' a refund, which actually sends money.",
+      "do": "Entering your UPI PIN sends money — it never receives it. Use only the number on the official app or card."
+    },
+    "hi": {
+      "title": "नकली कस्टमर केयर नंबर",
+      "how": "खोज परिणाम या विज्ञापन में मिला हेल्पलाइन नंबर नकली होता है। 'एजेंट' रिफ़ंड पाने के लिए UPI PIN डालने को कहता है, जिससे पैसे निकल जाते हैं।",
+      "do": "UPI PIN डालने से पैसे जाते हैं, आते नहीं। केवल आधिकारिक ऐप या कार्ड पर छपे नंबर का उपयोग करें।"
+    },
+    "kn": {
+      "title": "ನಕಲಿ ಕಸ್ಟಮರ್ ಕೇರ್ ನಂಬರ್",
+      "how": "ಹುಡುಕಾಟ ಫಲಿತಾಂಶ ಅಥವಾ ಜಾಹೀರಾತಿನಲ್ಲಿ ಸಿಕ್ಕ ಹೆಲ್ಪ್‌ಲೈನ್ ನಂಬರ್ ನಕಲಿ. 'ಏಜೆಂಟ್' ಮರುಪಾವತಿ ಪಡೆಯಲು UPI PIN ನಮೂದಿಸಲು ಹೇಳುತ್ತಾರೆ, ಆದರೆ ಅದು ಹಣ ಕಳುಹಿಸುತ್ತದೆ.",
+      "do": "UPI PIN ನಮೂದಿಸಿದರೆ ಹಣ ಹೋಗುತ್ತದೆ, ಬರುವುದಿಲ್ಲ. ಅಧಿಕೃತ ಆ್ಯಪ್ ಅಥವಾ ಕಾರ್ಡ್‌ನಲ್ಲಿರುವ ನಂಬರ್ ಮಾತ್ರ ಬಳಸಿ."
+    }
+  },
+  {
+    "id": "upi_mistake",
+    "en": {
+      "title": "'Sent money by mistake' / UPI collect",
+      "how": "Someone claims to have sent you money by mistake and pressures you to return it — or sends a UPI collect request disguised as a payment to you.",
+      "do": "Check your bank app balance, not an SMS. If money really came by mistake, the bank handles the reversal."
+    },
+    "hi": {
+      "title": "'ग़लती से पैसे भेजे' / UPI कलेक्ट",
+      "how": "कोई कहता है कि ग़लती से पैसे भेज दिए और जल्दी वापस करने का दबाव डालता है — या UPI कलेक्ट रिक्वेस्ट भेजता है जो आपको भुगतान जैसी दिखती है।",
+      "do": "SMS नहीं, बैंक ऐप में बैलेंस जाँचें। अगर सच में पैसे आए हैं तो बैंक रिवर्सल करता है।"
+    },
+    "kn": {
+      "title": "'ತಪ್ಪಿನಿಂದ ಹಣ ಕಳಿಸಿದೆ' / UPI ಕಲೆಕ್ಟ್",
+      "how": "ತಪ್ಪಾಗಿ ಹಣ ಕಳಿಸಿದ್ದೇನೆ ಎಂದು ಹೇಳಿ ತಕ್ಷಣ ಹಿಂದಿರುಗಿಸಲು ಒತ್ತಾಯಿಸುತ್ತಾರೆ — ಅಥವಾ ನಿಮಗೆ ಪಾವತಿ ಬಂದಂತೆ ಕಾಣುವ UPI ಕಲೆಕ್ಟ್ ವಿನಂತಿ ಕಳಿಸುತ್ತಾರೆ.",
+      "do": "SMS ಅಲ್ಲ, ಬ್ಯಾಂಕ್ ಆ್ಯಪ್‌ನಲ್ಲಿ ಬ್ಯಾಲೆನ್ಸ್ ಪರಿಶೀಲಿಸಿ. ನಿಜವಾಗಿ ಹಣ ಬಂದಿದ್ದರೆ ಬ್ಯಾಂಕ್ ರಿವರ್ಸಲ್ ಮಾಡುತ್ತದೆ."
+    }
+  },
+  {
+    "id": "relative_emergency",
+    "en": {
+      "title": "Relative / friend in emergency (AI voice clone)",
+      "how": "A call from a new number: 'It's your grandson, I've had an accident, send money now, don't tell anyone.' The voice may be AI-cloned.",
+      "do": "Hang up and call your relative on the number you already have. Ask a question only they would know."
+    },
+    "hi": {
+      "title": "रिश्तेदार / दोस्त की इमरजेंसी (AI वॉयस क्लोन)",
+      "how": "नए नंबर से कॉल: 'मैं आपका पोता हूँ, एक्सीडेंट हो गया, पैसे भेजो, किसी को मत बताना।' आवाज़ AI से क्लोन की गई हो सकती है।",
+      "do": "कॉल काटें और रिश्तेदार को पुराने नंबर पर फ़ोन करें। कोई ऐसा सवाल पूछें जो सिर्फ़ वो ही जानते हों।"
+    },
+    "kn": {
+      "title": "ಸಂಬಂಧಿ / ಗೆಳೆಯ ತುರ್ತು ಪರಿಸ್ಥಿತಿ (AI ವಾಯ್ಸ್ ಕ್ಲೋನ್)",
+      "how": "ಹೊಸ ನಂಬರ್‌ನಿಂದ ಕರೆ: 'ನಾನು ನಿಮ್ಮ ಮೊಮ್ಮಗ, ಅಪಘಾತವಾಗಿದೆ, ಹಣ ಕಳಿಸಿ, ಯಾರಿಗೂ ಹೇಳಬೇಡಿ.' ಧ್ವನಿ AI ಕ್ಲೋನ್ ಆಗಿರಬಹುದು.",
+      "do": "ಕರೆ ಕಡಿತಗೊಳಿಸಿ ಮತ್ತು ನಿಮ್ಮ ಬಳಿ ಇರುವ ನಂಬರ್‌ಗೆ ಸಂಬಂಧಿಗೆ ಕರೆ ಮಾಡಿ. ಅವರಿಗೆ ಮಾತ್ರ ತಿಳಿದ ಪ್ರಶ್ನೆ ಕೇಳಿ."
+    }
+  },
+  {
+    "id": "investment_scam",
+    "en": {
+      "title": "Investment / stock tips (WhatsApp / Telegram)",
+      "how": "Added to a group with a 'SEBI expert' promising 200–500% returns. A fake app shows big profits, but withdrawals are blocked until you pay more 'fees'.",
+      "do": "Guaranteed high returns are always a scam. Don't add more money to 'unlock' withdrawals."
+    },
+    "hi": {
+      "title": "निवेश / स्टॉक टिप्स (WhatsApp / Telegram)",
+      "how": "'SEBI विशेषज्ञ' वाले ग्रुप में जोड़ा जाता है जो 200–500% रिटर्न का वादा करते हैं। नकली ऐप में मुनाफ़ा दिखता है, लेकिन निकासी के लिए और पैसे माँगे जाते हैं।",
+      "do": "गारंटीड ऊँचा रिटर्न हमेशा धोखा होता है। निकासी 'अनलॉक' करने के लिए और पैसे न डालें।"
+    },
+    "kn": {
+      "title": "ಹೂಡಿಕೆ / ಸ್ಟಾಕ್ ಟಿಪ್ಸ್ (WhatsApp / Telegram)",
+      "how": "'SEBI ತಜ್ಞ' ಇರುವ ಗ್ರೂಪ್‌ಗೆ ಸೇರಿಸಲಾಗುತ್ತದೆ, 200–500% ರಿಟರ್ನ್ ಭರವಸೆ ನೀಡಲಾಗುತ್ತದೆ. ನಕಲಿ ಆ್ಯಪ್‌ನಲ್ಲಿ ಲಾಭ ತೋರಿಸಿ, ಹಣ ತೆಗೆಯಲು ಮತ್ತಷ್ಟು ಶುಲ್ಕ ಕೇಳಲಾಗುತ್ತದೆ.",
+      "do": "ಖಾತರಿ ಹೆಚ್ಚಿನ ರಿಟರ್ನ್ ಯಾವಾಗಲೂ ವಂಚನೆ. ಹಣ ತೆಗೆಯಲು 'ಅನ್‌ಲಾಕ್' ಮಾಡಲು ಮತ್ತಷ್ಟು ಹಣ ಹಾಕಬೇಡಿ."
+    }
+  },
+  {
+    "id": "part_time_job",
+    "en": {
+      "title": "Part-time job / task scam",
+      "how": "A message offers easy income — 'earn ₹3,000/day liking YouTube videos.' Small payouts build trust, then you're asked to deposit money to unlock 'prepaid tasks'.",
+      "do": "Any job that asks you to pay first is a scam."
+    },
+    "hi": {
+      "title": "पार्ट-टाइम जॉब / टास्क स्कैम",
+      "how": "संदेश में आसान कमाई का लालच: 'YouTube वीडियो लाइक करके ₹3,000/दिन कमाएँ।' पहले छोटे भुगतान मिलते हैं, फिर 'प्रीपेड टास्क' के लिए पैसे जमा करवाए जाते हैं।",
+      "do": "जो काम पहले पैसे माँगे, वह धोखा है।"
+    },
+    "kn": {
+      "title": "ಪಾರ್ಟ್-ಟೈಮ್ ಕೆಲಸ / ಟಾಸ್ಕ್ ಸ್ಕ್ಯಾಮ್",
+      "how": "ಸುಲಭ ಆದಾಯದ ಆಮಿಷ: 'YouTube ವಿಡಿಯೋ ಲೈಕ್ ಮಾಡಿ ₹3,000/ದಿನ ಗಳಿಸಿ.' ಮೊದಲು ಸಣ್ಣ ಪಾವತಿ ನೀಡಿ ನಂಬಿಕೆ ಬೆಳೆಸಿ, ನಂತರ 'ಪ್ರಿಪೇಯ್ಡ್ ಟಾಸ್ಕ್'ಗೆ ಹಣ ಕಟ್ಟಲು ಹೇಳುತ್ತಾರೆ.",
+      "do": "ಮೊದಲು ಹಣ ಕೇಳುವ ಯಾವುದೇ ಕೆಲಸ ವಂಚನೆ."
+    }
+  },
+  {
+    "id": "lottery_prize",
+    "en": {
+      "title": "Lottery / KBC / prize",
+      "how": "A message says you won ₹25 lakh in a lottery or lucky draw and asks you to pay a processing fee or GST to claim your prize.",
+      "do": "You can't win a lottery you never entered. Never pay to receive a prize."
+    },
+    "hi": {
+      "title": "लॉटरी / KBC / इनाम",
+      "how": "संदेश में कहा जाता है कि आपने लॉटरी या लकी ड्रॉ में ₹25 लाख जीते हैं और इनाम पाने के लिए प्रोसेसिंग फ़ीस या GST माँगी जाती है।",
+      "do": "जो लॉटरी आपने कभी नहीं भरी, उसे आप नहीं जीत सकते। इनाम पाने के लिए कभी पैसे न दें।"
+    },
+    "kn": {
+      "title": "ಲಾಟರಿ / KBC / ಬಹುಮಾನ",
+      "how": "ಲಾಟರಿ ಅಥವಾ ಲಕ್ಕಿ ಡ್ರಾದಲ್ಲಿ ₹25 ಲಕ್ಷ ಗೆದ್ದಿದ್ದೀರಿ ಎಂದು ಸಂದೇಶ ಬರುತ್ತದೆ, ಬಹುಮಾನ ಪಡೆಯಲು ಪ್ರಕ್ರಿಯಾ ಶುಲ್ಕ ಅಥವಾ GST ಕೇಳಲಾಗುತ್ತದೆ.",
+      "do": "ನೀವು ಎಂದೂ ಸೇರದ ಲಾಟರಿ ಗೆಲ್ಲಲು ಸಾಧ್ಯವಿಲ್ಲ. ಬಹುಮಾನ ಪಡೆಯಲು ಹಣ ಕೊಡಬೇಡಿ."
+    }
+  },
+  {
+    "id": "pension_scam",
+    "en": {
+      "title": "Pension / life certificate (senior-targeted)",
+      "how": "A caller poses as the pension or treasury office and says your pension will stop unless you share your OTP or bank details to update your life certificate.",
+      "do": "Pension offices never ask for OTP on the phone. Visit your bank or pension office in person."
+    },
+    "hi": {
+      "title": "पेंशन / जीवन प्रमाण (बुज़ुर्गों को निशाना)",
+      "how": "पेंशन या ट्रेज़री ऑफ़िस बनकर कॉल आती है — जीवन प्रमाण अपडेट करने के लिए OTP या बैंक जानकारी माँगी जाती है, वरना पेंशन बंद होने की धमकी दी जाती है।",
+      "do": "पेंशन ऑफ़िस फ़ोन पर OTP कभी नहीं माँगता। अपने बैंक या पेंशन ऑफ़िस में जाएँ।"
+    },
+    "kn": {
+      "title": "ಪೆನ್ಷನ್ / ಜೀವನ ಪ್ರಮಾಣಪತ್ರ (ಹಿರಿಯ ನಾಗರಿಕರನ್ನು ಗುರಿ)",
+      "how": "ಪೆನ್ಷನ್ ಅಥವಾ ಖಜಾನೆ ಕಚೇರಿ ಎಂದು ಹೇಳಿ ಕರೆ ಬರುತ್ತದೆ — ಜೀವನ ಪ್ರಮಾಣಪತ್ರ ಅಪ್‌ಡೇಟ್ ಮಾಡದಿದ್ದರೆ ಪೆನ್ಷನ್ ನಿಲ್ಲುತ್ತದೆ ಎಂದು OTP ಕೇಳಲಾಗುತ್ತದೆ.",
+      "do": "ಪೆನ್ಷನ್ ಕಚೇರಿಗಳು ಫೋನ್‌ನಲ್ಲಿ OTP ಕೇಳುವುದಿಲ್ಲ. ನಿಮ್ಮ ಬ್ಯಾಂಕ್ ಅಥವಾ ಪೆನ್ಷನ್ ಕಚೇರಿಗೆ ಭೇಟಿ ನೀಡಿ."
+    }
+  },
+  {
+    "id": "traffic_challan",
+    "en": {
+      "title": "Fake traffic e-challan",
+      "how": "An SMS claims a traffic challan of ₹500 is pending and will lead to court if not paid now — with a lookalike link or an APK file attachment.",
+      "do": "Don't open the link. Check challans only on the official government e-challan or Parivahan website, typed by you."
+    },
+    "hi": {
+      "title": "नकली ट्रैफ़िक ई-चालान",
+      "how": "SMS में कहा जाता है कि ₹500 का ट्रैफ़िक चालान बकाया है और अभी नहीं भरा तो कोर्ट होगा — साथ में एक नकली लिंक या APK फ़ाइल होती है।",
+      "do": "लिंक न खोलें। चालान केवल आधिकारिक सरकारी e-challan / परिवहन वेबसाइट पर स्वयं टाइप करके जाँचें।"
+    },
+    "kn": {
+      "title": "ನಕಲಿ ಟ್ರಾಫಿಕ್ ಇ-ಚಲ್ಲಾನ್",
+      "how": "₹500 ಟ್ರಾಫಿಕ್ ಚಲ್ಲಾನ್ ಬಾಕಿ ಇದೆ, ಈಗ ಕಟ್ಟದಿದ್ದರೆ ಕೋರ್ಟ್ ಎಂದು SMS ಬರುತ್ತದೆ — ಜೊತೆಗೆ ನಕಲಿ ಲಿಂಕ್ ಅಥವಾ APK ಫೈಲ್ ಇರುತ್ತದೆ.",
+      "do": "ಲಿಂಕ್ ತೆರೆಯಬೇಡಿ. ಅಧಿಕೃತ ಸರ್ಕಾರಿ e-challan / ಪರಿವಹನ್ ವೆಬ್‌ಸೈಟ್‌ನಲ್ಲಿ ಮಾತ್ರ ಚಲ್ಲಾನ್ ಪರಿಶೀಲಿಸಿ."
+    }
+  },
+  {
+    "id": "lpg_kyc",
+    "en": {
+      "title": "Gas / LPG / subsidy KYC",
+      "how": "A message warns your LPG connection or subsidy will be cancelled unless you complete eKYC via a link or call — then asks for your Aadhaar OTP.",
+      "do": "Official distributors do eKYC in person or via the official app. Never share an Aadhaar OTP on the phone."
+    },
+    "hi": {
+      "title": "गैस / LPG / सब्सिडी KYC",
+      "how": "संदेश में कहा जाता है कि eKYC पूरी नहीं की तो LPG कनेक्शन या सब्सिडी बंद होगी — फिर आधार OTP माँगी जाती है।",
+      "do": "आधिकारिक वितरक eKYC आमने-सामने या आधिकारिक ऐप के ज़रिए करते हैं। फ़ोन पर आधार OTP कभी न बताएँ।"
+    },
+    "kn": {
+      "title": "ಗ್ಯಾಸ್ / LPG / ಸಬ್ಸಿಡಿ KYC",
+      "how": "eKYC ಮಾಡದಿದ್ದರೆ LPG ಸಂಪರ್ಕ ಅಥವಾ ಸಬ್ಸಿಡಿ ರದ್ದಾಗುತ್ತದೆ ಎಂದು ಸಂದೇಶ ಬರುತ್ತದೆ — ನಂತರ ಆಧಾರ್ OTP ಕೇಳಲಾಗುತ್ತದೆ.",
+      "do": "ಅಧಿಕೃತ ವಿತರಕರು eKYC ಅನ್ನು ನೇರವಾಗಿ ಅಥವಾ ಅಧಿಕೃತ ಆ್ಯಪ್ ಮೂಲಕ ಮಾಡುತ್ತಾರೆ. ಫೋನ್‌ನಲ್ಲಿ ಆಧಾರ್ OTP ಎಂದಿಗೂ ಹೇಳಬೇಡಿ."
+    }
+  },
+  {
+    "id": "sextortion",
+    "en": {
+      "title": "Sextortion video call",
+      "how": "An unknown video call shows explicit content, your screen is recorded, then comes blackmail threatening to send the recording to your contacts.",
+      "do": "You haven't done anything wrong. Don't pay — paying leads to more demands. Block the caller, keep screenshots, and report to 1930."
+    },
+    "hi": {
+      "title": "सेक्सटॉर्शन वीडियो कॉल",
+      "how": "अनजान वीडियो कॉल पर अश्लील सामग्री दिखाई जाती है और स्क्रीन रिकॉर्ड की जाती है, फिर संपर्कों को भेजने की धमकी देकर पैसे माँगे जाते हैं।",
+      "do": "आपने कुछ ग़लत नहीं किया। पैसे न दें — देने से और माँगें बढ़ती हैं। ब्लॉक करें, स्क्रीनशॉट रखें और 1930 पर शिकायत करें।"
+    },
+    "kn": {
+      "title": "ಸೆಕ್ಸ್‌ಟಾರ್ಷನ್ ವಿಡಿಯೋ ಕರೆ",
+      "how": "ಅಪರಿಚಿತ ವಿಡಿಯೋ ಕರೆಯಲ್ಲಿ ಅಶ್ಲೀಲ ವಿಷಯ ತೋರಿಸಿ ಸ್ಕ್ರೀನ್ ರೆಕಾರ್ಡ್ ಮಾಡಲಾಗುತ್ತದೆ, ನಂತರ ಸಂಪರ್ಕಗಳಿಗೆ ಕಳಿಸುತ್ತೇವೆ ಎಂದು ಬ್ಲ್ಯಾಕ್‌ಮೇಲ್ ಮಾಡಲಾಗುತ್ತದೆ.",
+      "do": "ನೀವು ತಪ್ಪೇನೂ ಮಾಡಿಲ್ಲ. ಹಣ ಕೊಡಬೇಡಿ — ಕೊಟ್ಟಷ್ಟೂ ಮತ್ತಷ್ಟು ಕೇಳುತ್ತಾರೆ. ಬ್ಲಾಕ್ ಮಾಡಿ, ಸ್ಕ್ರೀನ್‌ಶಾಟ್ ಇಡಿ, 1930ಗೆ ದೂರು ನೀಡಿ."
+    }
+  }
+]
