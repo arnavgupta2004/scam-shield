@@ -14,19 +14,23 @@ SCENES = [
     {"kind": "slide", "name": "cover", "seconds": 13,
      "say": "A scam call can take a senior’s savings in minutes, before they think to call anyone. "
             "Scam Shield gives Bengaluru’s senior citizens a second opinion in that moment, in Kannada, Hindi or English."},
-    {"kind": "slide", "name": "problem", "seconds": 11,
+    {"kind": "slide", "name": "problem", "seconds": 10,
      "say": "Digital arrest, power-cut threats, a grandson on a new number. They all rush and isolate the victim."},
-    {"kind": "slide", "name": "need", "seconds": 10,
+    {"kind": "slide", "name": "need", "seconds": 9,
      "say": "So help has to come in seconds, in their language, even while the call is still going, and without sharing anything private."},
     {"kind": "scene", "name": "check_en", "seconds": 26,
-     "title": "Check a message", "sub": "English · a “digital arrest” SMS",
-     "say": "Paste or speak the message. Scam Shield masks private numbers, here the phone number and OTP, "
-            "before anything reaches an AI model, then IBM watsonx Orchestrate agents decide. "
+     "title": "Check a message", "sub": "Shared straight from WhatsApp",
+     "say": "Share a message straight from WhatsApp, or paste or speak it. Private numbers, like this phone number and OTP, "
+            "are masked before anything reaches an AI model; then IBM watsonx Orchestrate agents decide. "
             "Red: this looks like a scam, why, and exactly what to do."},
+    {"kind": "scene", "name": "screenshot", "seconds": 18,
+     "title": "Check a screenshot", "sub": "Text read on the phone; the image is never uploaded",
+     "say": "Many scams arrive as images. Pick a screenshot: the text is read on the phone itself, "
+            "the image is never uploaded, and it is checked the same way."},
     {"kind": "scene", "name": "call_kn", "seconds": 24,
      "title": "“I’m on a call right now”", "sub": "ಕನ್ನಡ · tap what the caller is saying",
-     "say": "During a call there’s no time to type. Tap what the caller is saying, "
-            "and the answer comes back in Kannada, read aloud: hang up now."},
+     "say": "During a call there’s no time to type. Tap what the caller is saying, and the answer comes back in Kannada: "
+            "hang up now. One tap calls the family, and the steps to report are right there."},
     {"kind": "scene", "name": "alert", "seconds": 15,
      "title": "Alert my family", "sub": "Only after the user says yes",
      "say": "Alerting family needs the user’s yes, and the agent’s tool refuses without it. "
@@ -34,16 +38,19 @@ SCENES = [
     {"kind": "scene", "name": "genuine", "seconds": 10,
      "title": "No false alarm", "sub": "A real bank OTP message",
      "say": "And it doesn’t cry wolf: a real bank OTP message is marked safe."},
+    {"kind": "scene", "name": "tricks", "seconds": 10,
+     "title": "Know the tricks", "sub": "हिन्दी · learn the patterns before a scam arrives",
+     "say": "Before any scam arrives, short cards in Hindi, Kannada and English teach the common tricks."},
     {"kind": "card", "name": "bob_card", "seconds": 16,
-     "say": "I built the plan, the tools and the four agents with IBM Bob. Bob’s Plan mode read the scam playbooks "
-            "and wrote the build plan; Agent mode built each tool test-first and set up the Orchestrate agents from the ADK docs."},
+     "say": "I built the plan, the tools and the four agents with IBM Bob: Plan mode wrote the build plan, "
+            "and Agent mode built each tool test-first and set up the Orchestrate agents."},
     {"kind": "clip", "name": "bob_shell", "seconds": 0, "say": ""},
-    {"kind": "slide", "name": "bobstory", "seconds": 14,
-     "say": "When knowledge-base indexing failed, Bob stopped and built a fallback tool. "
-            "After the trial credits ran out, I built the web app and API without Bob."},
+    {"kind": "slide", "name": "bobstory", "seconds": 15,
+     "say": "Later, Bob reviewed the app layer it hadn’t written; I checked its 21 findings and fixed 8. "
+            "Then Bob built WhatsApp sharing, screenshot checks, one-tap family calls, the awareness cards, and browser tests in CI."},
     {"kind": "slide", "name": "headline", "seconds": 12,
      "say": "On 22 scam messages it had never seen, keyword rules caught 4. Scam Shield caught 21, in about four seconds."},
-    {"kind": "slide", "name": "results", "seconds": 11,
+    {"kind": "slide", "name": "results", "seconds": 10,
      "say": "One false alarm in 18 genuine messages, and we publish the misses too."},
     {"kind": "slide", "name": "close", "seconds": 8,
      "say": "When in doubt, check first. The code and full results are on GitHub."},
@@ -54,3 +61,14 @@ ROW1 = ("This is Inspector Rao from Mumbai Cyber Crime. Your Aadhaar is linked t
         "You are under digital arrest. Stay on video call and do not inform anyone or you will be jailed. "
         "Call +91 98765 43210 and share the OTP 482913.")
 ROW37 = "123456 is your OTP for login to SBI YONO. Valid for 5 mins. Do not share OTP with anyone. -SBI"
+
+# A sample SMS screenshot for the screenshot scene (rendered at record time, then read by on-device OCR).
+SAMPLE_SMS = """<html><body style="margin:0;background:#E9EDF2;font-family:Arial,sans-serif">
+<div style="padding:28px 24px">
+<p style="margin:0 0 14px;font-size:22px;color:#55606E;font-weight:bold">VM-ELECTR · SMS</p>
+<div style="background:#FFFFFF;border-radius:22px;padding:24px 26px;font-size:30px;line-height:1.4;color:#111">
+Dear Consumer, your electricity power will be disconnected tonight at 9.30 PM because your previous month bill
+was not updated. Please immediately contact our electricity officer 97xxxxxx40.</div>
+<p style="margin:10px 0 0;font-size:20px;color:#7A8594;text-align:right">8:42 PM</p>
+</div></body></html>"""
+

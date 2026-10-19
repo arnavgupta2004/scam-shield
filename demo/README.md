@@ -12,7 +12,7 @@ pip install -r demo/requirements.txt
 python -m playwright install chromium
 
 uvicorn backend.main:app          # in one terminal, with .env set up
-python demo/make_video.py         # in another: records 4 scenes, then builds the video
+python demo/make_video.py         # in another: records 6 scenes, then builds the video
 ```
 
 Output in `demo/output/`:
@@ -37,7 +37,7 @@ Save a screen recording of Bob Shell as `demo/clips/bob_shell.mp4` and it is pla
 ## Changing things
 
 - Scene order, timings and narration: `demo/timeline.py`
-- Re-record one scene: `python demo/record.py --only call_kn`, then `python demo/compose.py`
+- Re-record one scene (check_en, screenshot, call_kn, alert, genuine, tricks): `python demo/record.py --only call_kn`, then `python demo/compose.py`
 - Watch the browser while recording: add `--headed`
 - The slide images in `assets/slides/` are rendered from the deck; replace them with exports of the deck if you change the slides.
 - Fonts in `assets/fonts/` are Atkinson Hyperlegible and Noto Sans (SIL Open Font License, licences included).

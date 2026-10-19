@@ -74,10 +74,10 @@ def bob_card() -> str:
     log = git("log", "--reverse", "-F", "--grep=(Bob", "--date=format:%d %b %H:%M",
               "--format=%h  %ad  %s").strip().splitlines()
     rows = "".join(
-        f"<p style='font-size:24px;line-height:1.7;color:{SOFT};font-family:monospace;white-space:nowrap;"
+        f"<p style='font-size:20px;line-height:1.55;color:{SOFT};font-family:monospace;white-space:nowrap;"
         f"overflow:hidden;text-overflow:ellipsis'>"
         f"<span style='color:{MINT}'>{html.escape(l[:7])}</span>{html.escape(l[7:])}</p>"
-        for l in log[:12]
+        for l in log[:20]
     ) or f"<p style='font-size:28px;color:{SOFT}'>(git log not available)</p>"
     plan = (ROOT / "PLAN.md").read_text(encoding="utf-8").splitlines() if (ROOT / "PLAN.md").exists() else []
     start = next((i for i, l in enumerate(plan) if l.startswith("## Milestones")), 0)

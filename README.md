@@ -20,7 +20,9 @@ Older adults are the main targets of "digital arrest", KYC, electricity-cutoff, 
 - **Check a screenshot.** Pick a screenshot from the gallery; the text is read on the phone and the image is never uploaded. Language data downloads on first use.
 - **"I'm on a call right now".** Big buttons describe what the caller is saying ("says police", "asks for OTP", "says don't tell anyone"), and the app replies with an instruction like "Hang up now". No typing during a call.
 - **Alert my family**, with human review built in. Nothing is drafted until the user confirms, and the user sends the message themselves on WhatsApp or SMS. The family number stays on the phone.
+- **Call my family.** Save a family member's number once (kept only on the phone); on a scam or "not sure" answer a large button calls them in one tap.
 - **How to report.** 1930, cybercrime.gov.in and Chakshu (Sanchar Saathi), in the user's language.
+- **Know the tricks.** 14 short cards on common scams, in English, Hindi and Kannada, with read-aloud, so seniors can learn the patterns before a scam arrives.
 
 ## Results
 
@@ -87,7 +89,7 @@ python backend/agent_ids.py          # paste the printed ids into .env
 uvicorn backend.main:app --reload    # open http://localhost:8000
 ```
 
-Tests (no credentials needed): `python -m pytest agents/tools backend -q`
+Tests (no credentials needed): `python -m pytest agents/tools backend -q` and, for the browser tests, `python -m playwright install chromium && python -m pytest tests/e2e -q`. Both run in CI on every push.
 
 Re-run the evaluation (backend must be running): `python eval/eval.py`. Rules-only baseline: `python eval/baseline.py --compare eval/holdout_set.csv`.
 
@@ -116,8 +118,8 @@ Re-run the evaluation (backend must be running): `python eval/eval.py`. Rules-on
 
 - Tested on 100 team-written messages, not real-world traffic. A larger, independently written test set is the next step.
 - Answers take about 4 seconds; a slow agent call occasionally times out and falls back to the rules.
-- Hindi and Kannada output should be reviewed by native speakers.
-- The prototype runs on a watsonx Orchestrate trial instance.
+- Hindi and Kannada text (screens, awareness cards and agent replies) should be reviewed by native speakers.
+- The prototype runs on a watsonx Orchestrate trial instance. Live verdicts need an active instance and the agent ids in `.env`; without one, the app answers from the offline rules and says so. The demo video shows the agents running.
 
 ## License
 

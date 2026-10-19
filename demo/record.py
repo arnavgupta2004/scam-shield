@@ -23,7 +23,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from common import OUT  # noqa: E402
-from timeline import ROW1, ROW37  # noqa: E402
+from timeline import ROW1, ROW37, SAMPLE_SMS  # noqa: E402
+from urllib.parse import quote  # noqa: E402
 
 VIEW = {"width": 540, "height": 1080}
 
@@ -76,13 +77,15 @@ def run(base: str, allow_fallback: bool, headed: bool, only: list[str] | None):
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=not headed)
 
-        def scene(name):
+        def scene(name, path="/", family=None):
             ctx = browser.new_context(viewport=VIEW, device_scale_factor=2,
                                       record_video_dir=str(tmp / name), record_video_size=VIEW)
             ctx.add_init_script(TAP_SCRIPT)
+            if family:  # a family number saved earlier on this phone
+                ctx.add_init_script(f"try{{localStorage.setItem('familyPhone','{family}')}}catch(e){{}}")
             pg = ctx.new_page()
             pg.on("response", watch)
-            pg.goto(base + "/")
+            pg.goto(base + path)
             pg.evaluate("document.fonts.ready")
             pg.wait_for_timeout(1200)
             return ctx, pg
@@ -105,13 +108,12 @@ def run(base: str, allow_fallback: bool, headed: bool, only: list[str] | None):
                 pg.evaluate(f"scrollTo(0, {start + (to - start) * i / steps})")
                 pg.wait_for_timeout(60)
 
-        todo = only or ["check_en", "call_kn", "alert", "genuine"]
+        todo = only or ["check_en", "screenshot", "call_kn", "alert", "genuine", "tricks"]
 
         if "check_en" in todo:
-            ctx, pg = scene("check_en")
-            pg.click("#msg")
-            pg.keyboard.insert_text(ROW1)  # like a paste
-            pg.wait_for_timeout(1800)
+            # Opened the way Android's share sheet opens it: the shared text arrives in the URL.
+            ctx, pg = scene("check_en", path="/?share_text=" + quote(ROW1))
+            pg.wait_for_timeout(2500)
             pg.click("#btn-check")
             wait_verdict(pg)
             pg.wait_for_timeout(3500)
@@ -124,8 +126,31 @@ def run(base: str, allow_fallback: bool, headed: bool, only: list[str] | None):
             pg.wait_for_timeout(1500)
             finish("check_en", ctx, pg)
 
+        if "screenshot" in todo:
+            sample = tmp / "sample-sms.png"
+            sample.parent.mkdir(parents=True, exist_ok=True)
+            maker = browser.new_page(viewport={"width": 540, "height": 420}, device_scale_factor=2)
+            maker.set_content(SAMPLE_SMS)
+            maker.screenshot(path=str(sample))
+            maker.close()
+            ctx, pg = scene("screenshot")
+            pg.wait_for_timeout(800)
+            with pg.expect_file_chooser() as fc:
+                pg.click("#btn-ocr")
+            fc.value.set_files(str(sample))
+            pg.wait_for_function("document.querySelector('#msg').value.length > 40 || !document.querySelector('#home-error').hidden",
+                                 timeout=180_000)
+            if pg.is_visible("#home-error"):
+                raise FallbackUsed("screenshot: text recognition failed (" + pg.inner_text("#home-error") + ")")
+            pg.wait_for_timeout(2500)
+            pg.click("#btn-check")
+            wait_verdict(pg)
+            pg.wait_for_timeout(4000)
+            pg.screenshot(path=str(screens_dir / "verdict-screenshot.png"))
+            finish("screenshot", ctx, pg)
+
         if "call_kn" in todo:
-            ctx, pg = scene("call_kn")
+            ctx, pg = scene("call_kn", family="9876543210")
             pg.click("[data-lang=kn]")
             pg.wait_for_timeout(1200)
             pg.click("#btn-call")
@@ -179,6 +204,18 @@ def run(base: str, allow_fallback: bool, headed: bool, only: list[str] | None):
             pg.screenshot(path=str(screens_dir / "verdict-genuine.png"))
             finish("genuine", ctx, pg)
 
+        if "tricks" in todo:
+            ctx, pg = scene("tricks")
+            pg.click("[data-lang=hi]")
+            pg.wait_for_timeout(1000)
+            pg.click("#btn-tricks")
+            pg.wait_for_timeout(3500)
+            pg.screenshot(path=str(screens_dir / "tricks-hi.png"))
+            for _ in range(2):
+                pg.click("#btn-tricks-next")
+                pg.wait_for_timeout(3000)
+            finish("tricks", ctx, pg)
+
         browser.close()
     shutil.rmtree(tmp, ignore_errors=True)
 
@@ -188,7 +225,7 @@ def main():
     ap.add_argument("--base", default="http://localhost:8000")
     ap.add_argument("--allow-fallback", action="store_true", help="testing only: keep scenes answered by the rules")
     ap.add_argument("--headed", action="store_true", help="show the browser while recording")
-    ap.add_argument("--only", nargs="*", help="re-record some scenes: check_en call_kn alert genuine")
+    ap.add_argument("--only", nargs="*", help="re-record some scenes: check_en screenshot call_kn alert genuine tricks")
     args = ap.parse_args()
 
     import urllib.request

@@ -63,10 +63,16 @@ Commits: `5c727e8` Fix verified review findings + review log (Bob) · `e28e1b5` 
 
 ## 6. New features built with Bob
 
-After the review session, three new user-facing features were added entirely in Bob Agent mode.
+After the review session, the following were built entirely in Bob Agent mode, one short session each, with the evaluated agents (triage, scam_analyst) left untouched so the measured results still apply.
 
 | Commit | Feature |
 |---|---|
 | `fe6411d` | **Share target** — PWA Web Share Target registered in `manifest.json`; `applyShareParams()` in `app.js` reads the `share_text` / `share_title` query params and pre-fills the message box. On Android this lets a user tap "Share" on any WhatsApp message and have it land directly in Scam Shield. |
 | `9afba85` | **Screenshot OCR** — Tesseract.js (loaded from CDN) runs entirely on the device; the image is never sent to the server. `btn-ocr` opens a hidden `<input type="file">`, OCR runs with the right language pack (`eng`, `hin+eng`, `kan+eng`) and the extracted text drops into the message box ready to check. Language data is cached by the browser on first use. |
 | `ce6ffaa` | **CI** — GitHub Actions workflow (`.github/workflows/tests.yml`) runs `pytest` on every push; the badge in the README reflects the latest run. |
+| `3d90486` | **OCR language fix and docs** — screenshots in Hindi or Kannada are read as `hin+eng` / `kan+eng`, since they often mix in English; clearer screenshot button; README and this file updated. |
+| `2c4dff8` | **One-tap “Call my family”** — a family number saved only on the phone; on a scam or “not sure” verdict a large call button appears, first in the live-call coach. |
+| `00495b5` | **End-to-end browser tests** — Playwright tests run the real app against a mocked Orchestrate (message check, Kannada live-call coach, alert confirmation gate, share prefill, language switch), now part of CI. |
+| `640b4b9` | **“Know the tricks”** — 14 awareness cards built from the scam playbooks, in English, Hindi and Kannada, with read-aloud; no agent calls. |
+| `c7b6cbc` | **Home layout** — the red “I’m on a call right now” button moved up, the family number tucked into a collapsible setting, tricks controls rearranged for Kannada. |
+
