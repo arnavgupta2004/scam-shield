@@ -60,3 +60,13 @@ Bob found 21 findings and presented them with severity, file and line. The team 
 Bob added tests for the two new backend behaviours (#20 and #5) and the suite stayed green at 163 passed. A full review log with Accept/Reject reasoning for all 21 findings is in [docs/REVIEW.md](REVIEW.md).
 
 Commits: `5c727e8` Fix verified review findings + review log (Bob) · `e28e1b5` Docs: Bob review of app layer (Bob). An earlier commit in the same session (`d8cf21c`) also tightened the report helper and changed the triage agent; the triage change was reverted to keep the evaluated configuration (see REVIEW.md).
+
+## 6. New features built with Bob
+
+After the review session, three new user-facing features were added entirely in Bob Agent mode.
+
+| Commit | Feature |
+|---|---|
+| `fe6411d` | **Share target** — PWA Web Share Target registered in `manifest.json`; `applyShareParams()` in `app.js` reads the `share_text` / `share_title` query params and pre-fills the message box. On Android this lets a user tap "Share" on any WhatsApp message and have it land directly in Scam Shield. |
+| `9afba85` | **Screenshot OCR** — Tesseract.js (loaded from CDN) runs entirely on the device; the image is never sent to the server. `btn-ocr` opens a hidden `<input type="file">`, OCR runs with the right language pack (`eng`, `hin+eng`, `kan+eng`) and the extracted text drops into the message box ready to check. Language data is cached by the browser on first use. |
+| `ce6ffaa` | **CI** — GitHub Actions workflow (`.github/workflows/tests.yml`) runs `pytest` on every push; the badge in the README reflects the latest run. |

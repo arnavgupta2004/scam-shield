@@ -16,6 +16,8 @@ Older adults are the main targets of "digital arrest", KYC, electricity-cutoff, 
 ## What it does
 
 - **Check a message.** Paste or speak an SMS, WhatsApp message or call summary. You get a verdict (looks like a scam / looks safe / not sure), the warning signs, and one or two clear actions, read aloud if you want.
+- **Share from WhatsApp.** On Android, once the app is installed to the home screen, "Share" on any WhatsApp message opens Scam Shield directly with the text pre-filled. Not available on iPhone.
+- **Check a screenshot.** Pick a screenshot from the gallery; the text is read on the phone and the image is never uploaded. Language data downloads on first use.
 - **"I'm on a call right now".** Big buttons describe what the caller is saying ("says police", "asks for OTP", "says don't tell anyone"), and the app replies with an instruction like "Hang up now". No typing during a call.
 - **Alert my family**, with human review built in. Nothing is drafted until the user confirms, and the user sends the message themselves on WhatsApp or SMS. The family number stays on the phone.
 - **How to report.** 1930, cybercrime.gov.in and Chakshu (Sanchar Saathi), in the user's language.

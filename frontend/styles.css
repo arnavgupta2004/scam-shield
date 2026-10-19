@@ -116,7 +116,7 @@ textarea:focus, input:focus { border-color: var(--ink); }
 .privacy svg { width: 22px; height: 22px; fill: var(--primary); flex: none; margin-top: 3px; }
 
 /* OCR screenshot button */
-.ocr-btn { margin-top: 10px; color: var(--muted); border-color: var(--line); font-weight: 400; }
+.ocr-btn { margin-top: 10px; border-color: var(--ink); font-weight: 400; }
 .ocr-btn svg { width: 24px; height: 24px; fill: currentColor; }
 .ocr-btn:hover { background: #E8ECF2; color: var(--ink); }
 .ocr-progress {

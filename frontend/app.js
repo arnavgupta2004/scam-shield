@@ -243,7 +243,7 @@
 
   // ---------------- OCR (Tesseract.js, on-device) ----------------
   // Language map: UI lang -> Tesseract language code(s). The image never leaves the device.
-  const OCR_LANG = { en: "eng", hi: "hin", kn: "kan" };
+  const OCR_LANG = { en: "eng", hi: "hin+eng", kn: "kan+eng" };
 
   function setOcrProgress(msg) {
     const el = $("ocr-progress");
