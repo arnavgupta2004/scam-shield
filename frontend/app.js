@@ -241,7 +241,21 @@
   });
   $("ready-close").addEventListener("click", () => $("alert-ready").close());
 
+  // ---------------- share target (PWA Web Share Target) ----------------
+  function applyShareParams() {
+    const params = new URLSearchParams(window.location.search);
+    const shareText = params.get("share_text") || "";
+    const shareTitle = params.get("share_title") || "";
+    const combined = [shareTitle, shareText].filter(Boolean).join("\n").trim();
+    if (!combined) return;
+    $("msg").value = combined;
+    show("home");
+    // Clear the URL params so a refresh doesn't re-fill the field.
+    history.replaceState(null, "", "/");
+  }
+
   // ---------------- start ----------------
   applyLang();
+  applyShareParams();
   if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(() => {});
 })();

@@ -384,3 +384,14 @@ def test_analyse_retries_on_401_and_returns_agent_verdict(make_client):
     body = http_client.post("/analyse", json={"text": ROW1, "lang": "en"}).json()
     assert body["verdict"] == "scam" and body["source"] == "agent"
     main.app.state.client = None
+
+
+# ---- GET / serves index.html -----------------------------------------------
+
+def test_root_serves_index_html(make_client):
+    """GET / must return the frontend index.html with a 200 status."""
+    client = make_client(None)
+    r = client.get("/")
+    assert r.status_code == 200
+    assert "text/html" in r.headers.get("content-type", "")
+    assert b"<html" in r.content.lower() or b"<!doctype" in r.content.lower()

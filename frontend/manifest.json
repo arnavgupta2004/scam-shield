@@ -8,5 +8,13 @@
   "theme_color": "#14213D",
   "icons": [
     { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
-  ]
+  ],
+  "share_target": {
+    "action": "/",
+    "method": "GET",
+    "params": {
+      "text": "share_text",
+      "title": "share_title"
+    }
+  }
 }
