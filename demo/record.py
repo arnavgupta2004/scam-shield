@@ -10,7 +10,9 @@ Every /analyse, /alert and /report answer is checked: if any came from the
 offline rules or templates instead of the agents, recording stops (so the
 video only shows real agent answers). --allow-fallback is for testing only.
 
-Writes demo/output/scenes/<scene>.webm and demo/output/screens/*.png
+Writes demo/output/scenes/<scene>.webm, <scene>.json (when each agent call started
+and ended, and named moments, in seconds from the start of the recording) and
+demo/output/screens/*.png
 """
 
 from __future__ import annotations
@@ -19,6 +21,7 @@ import argparse
 import json
 import shutil
 import sys
+import time
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -57,15 +60,34 @@ def run(base: str, allow_fallback: bool, headed: bool, only: list[str] | None):
     shutil.rmtree(tmp, ignore_errors=True)
 
     sources: list[tuple[str, str]] = []
+    # Timing for the video: agent calls and named moments, relative to the recording start.
+    timing = {"t0": 0.0, "calls": [], "marks": {}}
+
+    def now() -> float:
+        return round(time.monotonic() - timing["t0"], 3)
+
+    def mark(name):
+        timing["marks"][name] = now()
+
+    def is_agent_call(req) -> bool:
+        return req.method == "POST" and req.url.split("?")[0].endswith(("/analyse", "/alert", "/report"))
+
+    def on_request(req):
+        if is_agent_call(req):
+            timing["calls"].append({"ep": req.url.split("?")[0].rsplit("/", 1)[-1], "start": now()})
 
     def watch(resp):
         path = resp.url.split("?")[0]
-        if resp.request.method == "POST" and path.endswith(("/analyse", "/alert", "/report")):
+        if is_agent_call(resp.request):
+            ep = path.rsplit("/", 1)[-1]
+            open_calls = [c for c in timing["calls"] if c["ep"] == ep and "end" not in c]
+            if open_calls:
+                open_calls[0]["end"] = now()
             try:
                 src = json.loads(resp.text()).get("source", "?")
             except Exception:
                 src = f"HTTP {resp.status}"
-            sources.append((path.rsplit("/", 1)[-1], src))
+            sources.append((ep, src))
 
     def check(scene):
         bad = [(ep, s) for ep, s in sources if s != "agent"]
@@ -83,7 +105,9 @@ def run(base: str, allow_fallback: bool, headed: bool, only: list[str] | None):
             ctx.add_init_script(TAP_SCRIPT)
             if family:  # a family number saved earlier on this phone
                 ctx.add_init_script(f"try{{localStorage.setItem('familyPhone','{family}')}}catch(e){{}}")
+            timing.update(t0=time.monotonic(), calls=[], marks={})  # the video starts with the page
             pg = ctx.new_page()
+            pg.on("request", on_request)
             pg.on("response", watch)
             pg.goto(base + path)
             pg.evaluate("document.fonts.ready")
@@ -95,6 +119,8 @@ def run(base: str, allow_fallback: bool, headed: bool, only: list[str] | None):
             ctx.close()
             src = Path(video.path())
             shutil.move(str(src), scenes_dir / f"{name}.webm")
+            (scenes_dir / f"{name}.json").write_text(
+                json.dumps({"calls": timing["calls"], "marks": timing["marks"]}, indent=1), encoding="utf-8")
             check(name)
             print(f"  recorded {name}")
 
@@ -113,17 +139,20 @@ def run(base: str, allow_fallback: bool, headed: bool, only: list[str] | None):
         if "check_en" in todo:
             # Opened the way Android's share sheet opens it: the shared text arrives in the URL.
             ctx, pg = scene("check_en", path="/?share_text=" + quote(ROW1))
-            pg.wait_for_timeout(2500)
+            mark("shared")
+            pg.wait_for_timeout(1500)
             pg.click("#btn-check")
             wait_verdict(pg)
-            pg.wait_for_timeout(3500)
+            mark("verdict")
+            pg.wait_for_timeout(2500)
             pg.screenshot(path=str(screens_dir / "verdict-en-scam.png"))
             pg.click("details.sent summary")
+            mark("sent")
             pg.wait_for_timeout(300)
             slow_scroll(pg, pg.evaluate("document.body.scrollHeight"))
-            pg.wait_for_timeout(3500)
+            pg.wait_for_timeout(2500)
             slow_scroll(pg, 0)
-            pg.wait_for_timeout(1500)
+            pg.wait_for_timeout(800)
             finish("check_en", ctx, pg)
 
         if "screenshot" in todo:
@@ -138,14 +167,17 @@ def run(base: str, allow_fallback: bool, headed: bool, only: list[str] | None):
             with pg.expect_file_chooser() as fc:
                 pg.click("#btn-ocr")
             fc.value.set_files(str(sample))
+            mark("ocr_start")
             pg.wait_for_function("document.querySelector('#msg').value.length > 40 || !document.querySelector('#home-error').hidden",
                                  timeout=180_000)
             if pg.is_visible("#home-error"):
                 raise FallbackUsed("screenshot: text recognition failed (" + pg.inner_text("#home-error") + ")")
-            pg.wait_for_timeout(2500)
+            mark("ocr_done")
+            pg.wait_for_timeout(1500)
             pg.click("#btn-check")
             wait_verdict(pg)
-            pg.wait_for_timeout(4000)
+            mark("verdict")
+            pg.wait_for_timeout(3000)
             pg.screenshot(path=str(screens_dir / "verdict-screenshot.png"))
             finish("screenshot", ctx, pg)
 
@@ -155,6 +187,7 @@ def run(base: str, allow_fallback: bool, headed: bool, only: list[str] | None):
             pg.wait_for_timeout(1200)
             pg.click("#btn-call")
             pg.wait_for_timeout(1500)
+            mark("cues")
             pg.click(".cue >> nth=0")
             pg.wait_for_timeout(900)
             pg.click(".cue >> nth=3")
@@ -162,15 +195,17 @@ def run(base: str, allow_fallback: bool, headed: bool, only: list[str] | None):
             pg.screenshot(path=str(screens_dir / "call-coach-kn.png"))
             pg.click("#btn-coach")
             wait_verdict(pg)
-            pg.wait_for_timeout(4000)
+            mark("verdict")
+            pg.wait_for_timeout(3000)
             pg.screenshot(path=str(screens_dir / "verdict-kn-call.png"))
             pg.click("#btn-read")  # read aloud (audio is not in the recording)
-            pg.wait_for_timeout(2500)
+            pg.wait_for_timeout(1200)
             pg.click("#btn-report")
+            mark("report")
             pg.wait_for_function("document.querySelector('#report-steps').textContent.length > 40", timeout=120_000)
             pg.wait_for_timeout(300)
             slow_scroll(pg, pg.evaluate("document.querySelector('#report-block').offsetTop - 200"))
-            pg.wait_for_timeout(4000)
+            pg.wait_for_timeout(3000)
             pg.screenshot(path=str(screens_dir / "report-kn.png"))
             finish("call_kn", ctx, pg)
 
@@ -180,16 +215,19 @@ def run(base: str, allow_fallback: bool, headed: bool, only: list[str] | None):
             pg.keyboard.insert_text(ROW1)
             pg.click("#btn-check")
             wait_verdict(pg)
-            pg.wait_for_timeout(1500)
+            mark("verdict")
+            pg.wait_for_timeout(1000)
             pg.click("#btn-alert")
+            mark("confirm")
             pg.wait_for_timeout(1000)
             pg.click("#family-phone")
-            pg.keyboard.type("9876543210", delay=90)
-            pg.wait_for_timeout(1500)
+            pg.keyboard.type("9876543210", delay=60)
+            pg.wait_for_timeout(1000)
             pg.screenshot(path=str(screens_dir / "alert-confirm.png"))
             pg.click("#confirm-yes")
             pg.wait_for_selector("#alert-ready[open]", timeout=120_000)
-            pg.wait_for_timeout(4500)
+            mark("ready")
+            pg.wait_for_timeout(3500)
             pg.screenshot(path=str(screens_dir / "alert-ready.png"))
             finish("alert", ctx, pg)
 
@@ -197,10 +235,11 @@ def run(base: str, allow_fallback: bool, headed: bool, only: list[str] | None):
             ctx, pg = scene("genuine")
             pg.click("#msg")
             pg.keyboard.insert_text(ROW37)
-            pg.wait_for_timeout(1500)
+            pg.wait_for_timeout(800)
             pg.click("#btn-check")
             wait_verdict(pg)
-            pg.wait_for_timeout(4500)
+            mark("verdict")
+            pg.wait_for_timeout(3500)
             pg.screenshot(path=str(screens_dir / "verdict-genuine.png"))
             finish("genuine", ctx, pg)
 
@@ -209,11 +248,12 @@ def run(base: str, allow_fallback: bool, headed: bool, only: list[str] | None):
             pg.click("[data-lang=hi]")
             pg.wait_for_timeout(1000)
             pg.click("#btn-tricks")
-            pg.wait_for_timeout(3500)
+            mark("cards")
+            pg.wait_for_timeout(2500)
             pg.screenshot(path=str(screens_dir / "tricks-hi.png"))
             for _ in range(2):
                 pg.click("#btn-tricks-next")
-                pg.wait_for_timeout(3000)
+                pg.wait_for_timeout(2200)
             finish("tricks", ctx, pg)
 
         browser.close()

@@ -20,8 +20,8 @@ SOFT = "#DCE3EE"
 MUTED = "#AEB9CC"
 
 # Phone video placement on the 1920x1080 canvas (scenes recorded at 540x1080).
-PHONE_W, PHONE_H = 486, 972
-PHONE_X, PHONE_Y = W - 160 - PHONE_W, (H - PHONE_H) // 2
+PHONE_W, PHONE_H = 500, 1000
+PHONE_X, PHONE_Y = W - 190 - PHONE_W, (H - PHONE_H) // 2
 
 
 def font_css() -> str:
@@ -51,7 +51,7 @@ def page(body: str, css: str = "") -> str:
     return f"<!doctype html><html><head><meta charset='utf-8'><style>{font_css()}{BASE_CSS}{css}</style></head><body>{body}</body></html>"
 
 
-def render_pngs(items: list[tuple[str, Path]]) -> None:
+def render_pngs(items: list[tuple[str, Path]], transparent: bool = False) -> None:
     """Render (html, out_path) pairs to 1920x1080 PNGs with headless Chromium."""
     from playwright.sync_api import sync_playwright
 
@@ -65,6 +65,6 @@ def render_pngs(items: list[tuple[str, Path]]) -> None:
             pg.goto(tmp.as_uri())
             pg.evaluate("document.fonts.ready")
             pg.wait_for_timeout(150)
-            pg.screenshot(path=str(out))
+            pg.screenshot(path=str(out), omit_background=transparent)
             tmp.unlink()
         browser.close()
