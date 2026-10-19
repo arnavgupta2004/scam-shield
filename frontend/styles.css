@@ -87,6 +87,8 @@ textarea:focus, input:focus { border-color: var(--ink); }
 .btn-primary:hover { background: #0B4A46; }
 .btn-alarm { background: var(--alarm); color: #fff; }
 .btn-alarm:hover { background: #8F1C13; }
+.btn-call-family { background: var(--primary); color: var(--primary-ink); font-size: 24px; font-weight: 700; }
+.btn-call-family:hover { background: #0B4A46; }
 .btn-quiet { background: var(--surface); color: var(--ink); border-color: var(--ink); }
 .btn-quiet:hover { background: #E8ECF2; }
 .btn-wide { width: 100%; margin-top: 22px; }
@@ -114,6 +116,14 @@ textarea:focus, input:focus { border-color: var(--ink); }
 
 .privacy { display: flex; gap: 10px; align-items: flex-start; margin-top: 28px; font-size: 17px; color: var(--muted); }
 .privacy svg { width: 22px; height: 22px; fill: var(--primary); flex: none; margin-top: 3px; }
+
+/* Family number setting on home screen */
+.family-setting { margin-top: 22px; padding: 14px 16px; background: var(--surface);
+  border: 2px solid var(--line); border-radius: var(--radius-s); }
+.family-setting-label { display: block; font-weight: 700; margin-bottom: 8px; font-size: 18px; }
+.family-setting-row { display: flex; align-items: center; gap: 10px; }
+.family-setting-row input { flex: 1; margin: 0; }
+.family-setting-saved { font-size: 16px; color: var(--primary); font-weight: 700; white-space: nowrap; }
 
 /* OCR screenshot button */
 .ocr-btn { margin-top: 10px; border-color: var(--ink); font-weight: 400; }

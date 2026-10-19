@@ -170,6 +170,18 @@
     $("offline-note").hidden = r.source !== "rules";
     $("btn-1930").hidden = r.verdict === "genuine";
     $("btn-alert").hidden = r.verdict === "genuine";
+
+    // "Call my family" — only when verdict is worrying and a number is saved
+    const savedPhone = store.get("familyPhone") || "";
+    const showCall = r.verdict !== "genuine" && savedPhone;
+    const callBtn = $("btn-call-family");
+    if (showCall) {
+      const dialNum = savedPhone.replace(/[^\d+]/g, "");
+      callBtn.href = "tel:" + dialNum;
+      callBtn.textContent = t("callFamily");
+    }
+    callBtn.hidden = !showCall;
+
     $("sent-text").textContent = r.redacted_text || "";
     $("report-block").hidden = true;
     showError("verdict-error", "");
@@ -309,6 +321,26 @@
     // Clear the URL params so a refresh doesn't re-fill the field.
     history.replaceState(null, "", "/");
   }
+
+  // ---------------- family number setting ----------------
+  (function initFamilySetting() {
+    const input = $("setting-family-phone");
+    const saved = $("family-setting-saved");
+    // Pre-fill from storage
+    input.value = store.get("familyPhone") || "";
+    let saveTimer = null;
+    function saveFamilyPhone() {
+      const v = input.value.replace(/[^\d+\s\-()]/g, "").trim();
+      input.value = v;
+      if (v) store.set("familyPhone", v); else store.set("familyPhone", "");
+      // Show "Saved." briefly
+      saved.hidden = false;
+      clearTimeout(saveTimer);
+      saveTimer = setTimeout(() => { saved.hidden = true; }, 2000);
+    }
+    input.addEventListener("change", saveFamilyPhone);
+    input.addEventListener("blur", saveFamilyPhone);
+  })();
 
   // ---------------- start ----------------
   applyLang();

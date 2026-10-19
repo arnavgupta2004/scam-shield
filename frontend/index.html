@@ -52,6 +52,15 @@
       <p id="ocr-progress" class="ocr-progress" aria-live="polite" hidden></p>
       <p class="error" id="home-error" role="alert" hidden></p>
 
+      <!-- Family number setting (saved only on this phone) -->
+      <div class="family-setting" id="family-setting">
+        <label for="setting-family-phone" class="family-setting-label" data-t="familySettingLabel"></label>
+        <div class="family-setting-row">
+          <input type="tel" id="setting-family-phone" inputmode="tel" autocomplete="tel" maxlength="16" data-t-placeholder="familySettingPlaceholder">
+          <span id="family-setting-saved" class="family-setting-saved" aria-live="polite" hidden data-t="familySettingSaved"></span>
+        </div>
+      </div>
+
       <button type="button" id="btn-call" class="callstrip">
         <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1l-2.2 2.2Z"/></svg>
         <span>
@@ -117,6 +126,7 @@
 
       <div class="actions">
         <button type="button" class="btn btn-quiet" id="btn-read" data-t="readAloud"></button>
+        <a class="btn btn-call-family" id="btn-call-family" data-t="callFamily" hidden></a>
         <a class="btn btn-alarm" id="btn-1930" href="tel:1930" data-t="call1930" hidden></a>
         <button type="button" class="btn btn-primary" id="btn-alert" data-t="alertFamily"></button>
         <button type="button" class="btn btn-quiet" id="btn-report" data-t="report"></button>

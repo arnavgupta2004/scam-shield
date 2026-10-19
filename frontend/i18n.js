@@ -65,6 +65,10 @@ window.I18N = {
     ocrDone: "Text read from image. Check it then tap Check.",
     ocrEmpty: "Could not find any text in that image. Please try a clearer screenshot.",
     ocrError: "Could not read the image. Please try again or type the message.",
+    callFamily: "Call my family",
+    familySettingLabel: "Family number (saved only on this phone)",
+    familySettingPlaceholder: "e.g. +91 98765 43210",
+    familySettingSaved: "Saved.",
   },
   hi: {
     appName: "स्कैम शील्ड",
@@ -130,6 +134,10 @@ window.I18N = {
     ocrDone: "तस्वीर से लिखाई पढ़ ली गई है। जाँचें और फिर 'जाँचें' दबाएँ।",
     ocrEmpty: "इस तस्वीर में कोई लिखाई नहीं मिली। कृपया साफ़ स्क्रीनशॉट आज़माएँ।",
     ocrError: "तस्वीर नहीं पढ़ पाए। दोबारा कोशिश करें या संदेश टाइप करें।",
+    callFamily: "परिवार को कॉल करें",
+    familySettingLabel: "परिवार का नंबर (सिर्फ़ इसी फ़ोन में सेव होगा)",
+    familySettingPlaceholder: "जैसे +91 98765 43210",
+    familySettingSaved: "सेव हो गया।",
   },
   kn: {
     appName: "ಸ್ಕ್ಯಾಮ್ ಶೀಲ್ಡ್",
@@ -195,5 +203,9 @@ window.I18N = {
     ocrDone: "ಚಿತ್ರದಿಂದ ಪಠ್ಯ ಓದಲಾಗಿದೆ. ಪರಿಶೀಲಿಸಿ ನಂತರ 'ಪರಿಶೀಲಿಸಿ' ಒತ್ತಿ.",
     ocrEmpty: "ಆ ಚಿತ್ರದಲ್ಲಿ ಯಾವುದೇ ಪಠ್ಯ ಕಂಡುಬಂದಿಲ್ಲ. ಸ್ಪಷ್ಟ ಸ್ಕ್ರೀನ್‌ಶಾಟ್ ಪ್ರಯತ್ನಿಸಿ.",
     ocrError: "ಚಿತ್ರ ಓದಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ ಅಥವಾ ಸಂದೇಶ ಟೈಪ್ ಮಾಡಿ.",
+    callFamily: "ಮನೆಯವರಿಗೆ ಕರೆ ಮಾಡಿ",
+    familySettingLabel: "ಮನೆಯವರ ನಂಬರ್ (ಈ ಫೋನ್‌ನಲ್ಲಿ ಮಾತ್ರ ಉಳಿಯುತ್ತದೆ)",
+    familySettingPlaceholder: "ಉದಾ. +91 98765 43210",
+    familySettingSaved: "ಉಳಿಸಲಾಗಿದೆ.",
   },
 };
