@@ -229,6 +229,80 @@ def test_report_agent_and_fallback(make_client):
     assert steps["source"] == "template" and "1930" in steps["steps"]
 
 
+# ---- _clean_report ----------------------------------------------------------
+
+from backend.main import _clean_report  # noqa: E402
+
+
+def test_clean_report_strips_bold_markdown():
+    raw = "**1. Call 1930 immediately.**\n**2. File at cybercrime.gov.in.**"
+    out = _clean_report(raw)
+    assert "**" not in out
+    assert "1. Call 1930 immediately." in out
+    assert "2. File at cybercrime.gov.in." in out
+
+
+def test_clean_report_strips_italic_markdown():
+    raw = "1. Call _1930_ immediately.\n2. File at cybercrime.gov.in."
+    out = _clean_report(raw)
+    assert "_" not in out
+    assert "1930" in out
+
+
+def test_clean_report_strips_bracketed_notes():
+    raw = (
+        "[Note: follow these steps]\n"
+        "1. Call 1930 immediately.\n"
+        "2. File at cybercrime.gov.in.\n"
+        "[End of instructions]"
+    )
+    out = _clean_report(raw)
+    assert "[" not in out
+    assert "1. Call 1930 immediately." in out
+    assert "2. File at cybercrime.gov.in." in out
+
+
+def test_clean_report_strips_bullet_dashes():
+    raw = "- Call 1930 immediately.\n- File at cybercrime.gov.in."
+    out = _clean_report(raw)
+    assert out.startswith("Call 1930") or "Call 1930" in out
+    assert "-" not in out or out.startswith("1.")
+
+
+def test_clean_report_drops_blank_lines_from_note_removal():
+    raw = "1. Call 1930.\n[This note fills a whole line]\n2. File complaint."
+    out = _clean_report(raw)
+    lines = out.splitlines()
+    # No blank lines after stripping the bracketed note
+    assert all(l.strip() for l in lines)
+    assert len(lines) == 2
+
+
+def test_clean_report_plain_text_unchanged():
+    raw = "1. Call 1930 immediately.\n2. File at cybercrime.gov.in."
+    assert _clean_report(raw) == raw
+
+
+def test_report_endpoint_strips_markdown_from_agent_reply(make_client):
+    """The /report endpoint must strip ** and [notes] from the agent reply."""
+    md_reply = (
+        "**Steps to report:**\n"
+        "1. **Call 1930** immediately.\n"
+        "2. File at cybercrime.gov.in.\n"
+        "[Note: translated for your language]"
+    )
+    client = make_client(FakeOrchestrate(reply=md_reply))
+    body = client.post("/report", json={"lang": "en"}).json()
+    assert body["source"] == "agent"
+    steps = body["steps"]
+    assert "**" not in steps
+    assert "[" not in steps
+    assert "1930" in steps
+    assert "cybercrime.gov.in" in steps
+
+
+# ---- /health ----------------------------------------------------------------
+
 def test_health(make_client):
     client = make_client(FakeOrchestrate(reply=""))
     body = client.get("/health").json()

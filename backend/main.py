@@ -15,6 +15,7 @@ from __future__ import annotations
 import json
 import logging
 import os
+import re
 import time
 from pathlib import Path
 from typing import Literal
@@ -68,6 +69,29 @@ def get_client(request: Request) -> OrchestrateClient | None:
         return None
     request.app.state.client = client
     return client
+
+
+# ---------------------------------------------------------------------------
+# Helpers
+# ---------------------------------------------------------------------------
+
+_MD_BOLD = re.compile(r"\*{1,2}(.*?)\*{1,2}")         # **text** or *text*
+_MD_ITALIC = re.compile(r"_(.*?)_")                    # _text_
+_BRACKET_NOTE = re.compile(r"\[[^\]]{0,120}\]")        # [Note: ...] / [bracketed]
+_LEADING_DASH = re.compile(r"(?m)^[-•]\s+")            # bullet dashes
+
+
+def _clean_report(text: str) -> str:
+    """Strip markdown and meta-notes from a report_helper agent reply."""
+    text = _MD_BOLD.sub(r"\1", text)
+    text = _MD_ITALIC.sub(r"\1", text)
+    text = _BRACKET_NOTE.sub("", text)
+    text = _LEADING_DASH.sub("", text)
+    # Collapse multiple spaces left by removals, and trim each line
+    lines = [" ".join(l.split()) for l in text.splitlines()]
+    # Drop blank lines produced by removing bracketed notes that were on their own line
+    lines = [l for l in lines if l.strip()]
+    return "\n".join(lines)
 
 
 # ---------------------------------------------------------------------------
@@ -186,7 +210,7 @@ async def report(req: ReportRequest, request: Request):
         try:
             reply = (await client.chat(agent_id, content)).strip()
             if reply:
-                return {"steps": reply, "source": "agent"}
+                return {"steps": _clean_report(reply), "source": "agent"}
         except Exception as exc:
             log.warning("report: report_helper call failed (%s)", type(exc).__name__)
     return {"steps": fallback.report_steps(req.lang), "source": "template"}
