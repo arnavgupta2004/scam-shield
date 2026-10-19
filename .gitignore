@@ -8,3 +8,5 @@ dist/
 build/
 .pytest_cache/
 eval/results_*.csv
+demo/output/
+demo/clips/*.mp4
