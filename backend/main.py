@@ -18,7 +18,7 @@ import os
 import re
 import time
 from pathlib import Path
-from typing import Literal
+from typing import Annotated, Literal
 
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException, Request
@@ -123,10 +123,20 @@ class AlertRequest(BaseModel):
     user_confirmed: bool = False
 
 
+_SCAM_TYPE_RE = re.compile(r"^[a-z_]{1,40}$")
+
+
 class ReportRequest(BaseModel):
     lang: Lang = "en"
-    scam_type: str | None = Field(None, max_length=60)
+    scam_type: str | None = Field(None, max_length=40)
     summary: str = Field("", max_length=600)
+
+    @property
+    def safe_scam_type(self) -> str | None:
+        """Return scam_type only if it matches the expected slug pattern, else None."""
+        if self.scam_type and _SCAM_TYPE_RE.match(self.scam_type):
+            return self.scam_type
+        return None
 
 
 # ---------------------------------------------------------------------------
@@ -206,7 +216,7 @@ async def report(req: ReportRequest, request: Request):
     client = get_client(request)
     agent_id = _agent_ids()["report"]
     if client and agent_id:
-        content = json.dumps({"lang": req.lang, "scam_type": req.scam_type, "summary": summary}, ensure_ascii=False)
+        content = json.dumps({"lang": req.lang, "scam_type": req.safe_scam_type, "summary": summary}, ensure_ascii=False)
         try:
             reply = (await client.chat(agent_id, content)).strip()
             if reply:

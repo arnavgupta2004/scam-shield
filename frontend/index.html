@@ -78,6 +78,8 @@
     </section>
 
     <!-- Checking -->
+    <p id="mic-status" role="status" aria-live="polite" class="visually-hidden"></p>
+
     <section id="screen-wait" class="screen wait" hidden aria-live="polite">
       <div class="pulse" aria-hidden="true"></div>
       <p data-t="checking"></p>
@@ -128,8 +130,8 @@
   </main>
 
   <!-- Confirmation before any family alert (human in the loop) -->
-  <dialog id="confirm" aria-labelledby="confirm-title">
-    <form method="dialog" id="confirm-form">
+  <dialog id="confirm" aria-labelledby="confirm-title" aria-modal="true">
+    <form id="confirm-form">
       <h2 id="confirm-title" data-t="confirmTitle"></h2>
       <p data-t="confirmBody"></p>
       <label for="family-phone" class="field-label" data-t="phoneLabel"></label>
@@ -141,7 +143,7 @@
     </form>
   </dialog>
 
-  <dialog id="alert-ready" aria-labelledby="ready-title">
+  <dialog id="alert-ready" aria-labelledby="ready-title" aria-modal="true">
     <h2 id="ready-title" data-t="alertReady"></h2>
     <p id="alert-text" class="quote"></p>
     <div class="dialog-actions stack">

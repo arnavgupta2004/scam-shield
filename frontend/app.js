@@ -53,6 +53,7 @@
       if (label) label.textContent = t("speak");
     }
     recognizer = null; activeMic = null;
+    $("mic-status").textContent = "";
   }
 
   document.querySelectorAll("[data-mic]").forEach((btn) => btn.addEventListener("click", () => {
@@ -71,12 +72,19 @@
       for (let i = 0; i < e.results.length; i++) text += e.results[i][0].transcript;
       target.value = base + text;
     };
-    recognizer.onerror = () => stopMic();
+    recognizer.onerror = (e) => {
+      const msgKey = e.error === "not-allowed" ? "micDenied"
+                   : e.error === "no-speech"   ? "micNoSpeech"
+                   : "micError";
+      stopMic();
+      showError(errId, t(msgKey));
+    };
     recognizer.onend = () => stopMic();
     activeMic = btn;
     btn.setAttribute("aria-pressed", "true");
     const label = btn.querySelector("span");
     if (label) label.textContent = t("listening");
+    $("mic-status").textContent = t("listening");
     showError(errId, "");
     recognizer.start();
   }));
@@ -205,6 +213,8 @@
     $("confirm").showModal();
   });
   $("confirm-no").addEventListener("click", () => $("confirm").close());
+  // Prevent the form's native submit (no method="dialog") and route Enter to confirm-yes.
+  $("confirm-form").addEventListener("submit", (e) => { e.preventDefault(); $("confirm-yes").click(); });
 
   $("confirm-yes").addEventListener("click", async () => {
     const btn = $("confirm-yes");

@@ -91,7 +91,16 @@ class OrchestrateClient:
                 headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json"},
             )
         if resp.status_code == 401:
+            # Token may have expired mid-flight; clear it and retry once with a fresh token.
             self._token = None
+            self._token_expiry = 0.0
+            token = await self._get_token()
+            async with self._client() as client:
+                resp = await client.post(
+                    url,
+                    json=body,
+                    headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json"},
+                )
         if resp.status_code != 200:
             raise OrchestrateError(f"agent call failed: HTTP {resp.status_code}")
         return parse_reply(resp.text)

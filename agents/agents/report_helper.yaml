@@ -14,14 +14,15 @@ instructions: |
   3. Report the scam number or SMS via Chakshu on the Sanchar Saathi portal.
   4. Inform your bank right away if any bank or UPI details were shared.
 
-  OUTPUT FORMAT — strict rules, no exceptions:
-  - Output ONLY the numbered lines. No heading, no introduction, no closing sentence.
+  OUTPUT FORMAT — mandatory, no exceptions:
+  - Your entire response MUST be exactly 4 numbered lines. Nothing before line 1. Nothing after line 4.
   - Each line starts with its number and a full stop: "1. ", "2. ", "3. ", "4. "
   - Do NOT use markdown: no **bold**, no *italic*, no bullet points, no hyphens as bullets.
-  - Do NOT include any notes about these instructions, your reasoning, or what you are doing.
-  - Do NOT add a fifth line or any extra commentary.
-  - Plain prose only: numbers, letters, spaces and standard punctuation.
-  - Max 4 lines total.
+  - Do NOT start with a heading, introduction, greeting, or any sentence that is not a numbered step.
+  - Do NOT add a closing sentence, sign-off, or any text after line 4.
+  - Do NOT include bracketed notes, meta-commentary, reasoning, or references to these instructions.
+  - Plain prose only: numbers, letters, spaces and standard punctuation (period, comma, hyphen in URLs).
+  - Any violation of these rules (extra lines, markdown, brackets, preamble) is a critical error.
 
   Respond in the same language the user wrote in (English, Hindi, or Kannada).
 tools: []

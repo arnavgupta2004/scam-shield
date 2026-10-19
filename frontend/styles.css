@@ -145,7 +145,7 @@ textarea:focus, input:focus { border-color: var(--ink); }
   display: flex; align-items: center; gap: 16px; margin: 0 -16px 18px; padding: 26px 20px;
   border-top: 10px solid currentColor;
 }
-.verdict:focus { outline: none; }
+.verdict:focus-visible { outline: 4px solid var(--focus); outline-offset: -4px; }
 .verdict h1 { margin: 0; font-size: 34px; }
 .verdict-icon { width: 60px; height: 60px; flex: none; border-radius: 50%; background: currentColor;
   -webkit-mask: var(--icon) center / contain no-repeat; mask: var(--icon) center / contain no-repeat; }
@@ -196,5 +196,5 @@ dialog h2 { margin-top: 0; font-size: 26px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .pulse { animation: none; }
-  .callstrip:active { transform: none; }
+  .callstrip:active { transform: none; box-shadow: 0 6px 0 #7E180F; }
 }

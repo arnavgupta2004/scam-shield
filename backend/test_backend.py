@@ -307,3 +307,80 @@ def test_health(make_client):
     client = make_client(FakeOrchestrate(reply=""))
     body = client.get("/health").json()
     assert body["status"] == "ok" and body["agents_configured"]["analyse"] is True
+
+
+# ---- /report scam_type validation ------------------------------------------
+
+def test_report_scam_type_valid_slug_forwarded(make_client):
+    """A valid slug like 'digital_arrest' must be forwarded to the agent as-is."""
+    fake = FakeOrchestrate(reply="1. Call 1930 immediately.")
+    client = make_client(fake)
+    r = client.post("/report", json={"lang": "en", "scam_type": "digital_arrest"})
+    assert r.status_code == 200
+    sent = json.loads(fake.sent[0]["messages"][0]["content"])
+    assert sent["scam_type"] == "digital_arrest"
+
+
+def test_report_scam_type_invalid_nulled(make_client):
+    """An invalid scam_type (contains capitals/spaces) must be nulled before forwarding."""
+    fake = FakeOrchestrate(reply="1. Call 1930 immediately.")
+    client = make_client(fake)
+    # uppercase — invalid slug
+    r = client.post("/report", json={"lang": "en", "scam_type": "Digital Arrest"})
+    assert r.status_code == 200
+    sent = json.loads(fake.sent[0]["messages"][0]["content"])
+    assert sent["scam_type"] is None
+
+
+def test_report_scam_type_too_long_nulled(make_client):
+    """A scam_type longer than 40 chars must be rejected by Pydantic (422)."""
+    fake = FakeOrchestrate(reply="1. Call 1930.")
+    client = make_client(fake)
+    r = client.post("/report", json={"lang": "en", "scam_type": "a" * 41})
+    assert r.status_code == 422
+
+
+# ---- 401 → token refresh + retry -------------------------------------------
+
+class Fake401ThenOk:
+    """First agent call returns 401; second (after token refresh) returns 200."""
+
+    def __init__(self, reply: str):
+        self.reply = reply
+        self.call_count = 0
+        self.token_fetches = 0
+
+    def handler(self, request: httpx.Request) -> httpx.Response:
+        if "apikeys/token" in str(request.url):
+            self.token_fetches += 1
+            return httpx.Response(200, json={"token": f"tok{self.token_fetches}", "expires_in": 3600})
+        self.call_count += 1
+        if self.call_count == 1:
+            return httpx.Response(401, text="Unauthorized")
+        return httpx.Response(200, text=sse(self.reply))
+
+
+def test_chat_retries_after_401(monkeypatch):
+    """On a 401 the client must fetch a fresh token and retry; the retry must succeed."""
+    fake = Fake401ThenOk(AGENT_SCAM)
+    transport = httpx.MockTransport(fake.handler)
+    oc = OrchestrateClient("https://wo.example", "key", transport=transport)
+
+    import asyncio
+    reply = asyncio.run(oc.chat("agent-x", "hello"))
+    assert fake.call_count == 2          # first attempt 401 + one retry
+    assert fake.token_fetches == 2       # second token fetch for the retry
+    assert "scam" in reply               # the retry succeeded
+
+
+def test_analyse_retries_on_401_and_returns_agent_verdict(make_client):
+    """/analyse must succeed (agent path) when Orchestrate returns 401 then 200."""
+    fake = Fake401ThenOk(AGENT_SCAM)
+    main.app.state.client = OrchestrateClient(
+        "https://wo.example", "key", transport=httpx.MockTransport(fake.handler))
+    import os as _os
+    _os.environ.setdefault("TRIAGE_AGENT_ID", "triage-id")
+    http_client = TestClient(main.app)
+    body = http_client.post("/analyse", json={"text": ROW1, "lang": "en"}).json()
+    assert body["verdict"] == "scam" and body["source"] == "agent"
+    main.app.state.client = None
