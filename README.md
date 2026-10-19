@@ -1,5 +1,7 @@
 # Scam Shield
 
+[![Tests](https://github.com/arnavgupta2004/scam-shield/actions/workflows/tests.yml/badge.svg)](https://github.com/arnavgupta2004/scam-shield/actions/workflows/tests.yml)
+
 **IBM Bobathon: Build for Bengaluru** · Student category · Safer Communities, Stronger Futures
 
 Scam Shield helps senior citizens in Bengaluru check a suspicious message or phone call in English, Hindi or Kannada, and tells them in plain words what to do next. It runs on IBM watsonx Orchestrate agents; the agents and their tools were built with IBM Bob.
