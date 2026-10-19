@@ -239,6 +239,9 @@ dialog h2 { margin-top: 0; font-size: 26px; }
   .row { flex-direction: column; }
   .row-tight { flex-direction: row; }
   .dialog-actions { flex-direction: column-reverse; }
+  #msg { min-height: 0; height: 6.5rem; }
+  .callstrip { margin-top: 20px; }
+  main { padding-top: 16px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .pulse { animation: none; }
