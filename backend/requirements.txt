@@ -5,3 +5,4 @@ python-dotenv>=1.0
 # The backend reuses the tool functions in agents/tools, which import the ADK decorator.
 ibm-watsonx-orchestrate==2.18.1
 pytest>=8.0
+pytest-playwright>=0.4

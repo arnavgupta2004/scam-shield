@@ -19,5 +19,11 @@ jobs:
       - name: Install dependencies
         run: pip install -r backend/requirements.txt
 
-      - name: Run tests
+      - name: Install Playwright browsers
+        run: playwright install chromium --with-deps
+
+      - name: Run unit tests
         run: python -m pytest agents/tools backend -q
+
+      - name: Run e2e tests
+        run: python -m pytest tests/e2e -q
