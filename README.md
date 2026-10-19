@@ -105,6 +105,7 @@ Re-run the evaluation (backend must be running): `python eval/eval.py`. Rules-on
 
 - **Built with IBM Bob** (Plan and Agent modes in Bob Shell): the build plan, all agent tools and their tests, the four Orchestrate agents, the knowledge-base setup, the import script and the rules baseline. See [docs/BOB_STORY.md](docs/BOB_STORY.md) and the commits marked "(Bob)".
 - **Built without Bob**, after the Bob trial credits ran out: the web app (`frontend/`), the API (`backend/`), the end-to-end evaluation script, and a later fix to the triage hand-off.
+- **Reviewed with Bob**, after Pro+ credits were restored: Bob audited the app layer (backend and frontend) for PII leaks, accessibility problems and bugs, found 21 findings, and fixed the 8 accepted ones — including a 401-retry in the Orchestrate client, `scam_type` slug validation, a visible focus ring on the verdict banner, localised microphone-error messages with an `aria-live` announcement, `aria-modal` on both dialogs, and tighter `report_helper` output rules. Full log: [docs/REVIEW.md](docs/REVIEW.md).
 - The scam playbooks and test sets were prepared separately as data.
 
 ## Known limits
