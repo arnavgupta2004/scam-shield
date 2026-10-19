@@ -59,4 +59,4 @@ Bob found 21 findings and presented them with severity, file and line. The team 
 
 Bob added tests for the two new backend behaviours (#20 and #5) and the suite stayed green at 163 passed. A full review log with Accept/Reject reasoning for all 21 findings is in [docs/REVIEW.md](REVIEW.md).
 
-Commits: `5c727e8` Fix verified review findings + review log (Bob) · `<docs commit>` Docs: Bob review of app layer (Bob)
+Commits: `5c727e8` Fix verified review findings + review log (Bob) · `e28e1b5` Docs: Bob review of app layer (Bob). An earlier commit in the same session (`d8cf21c`) also tightened the report helper and changed the triage agent; the triage change was reverted to keep the evaluated configuration (see REVIEW.md).
