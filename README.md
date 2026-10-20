@@ -6,8 +6,8 @@
 
 Scam Shield helps senior citizens in Bengaluru check a suspicious message or phone call in English, Hindi or Kannada, and tells them in plain words what to do next. It runs on IBM watsonx Orchestrate agents; the agents and their tools were built with IBM Bob.
 
-- Demo video: _add link_
-- Presentation: _add link or file name_
+- Demo video: https://youtu.be/hBXdT60qPcE
+- Presentation: `Scam-Shield-IBM-Bobathon.pptx` (in the submission)
 
 ## The problem
 
